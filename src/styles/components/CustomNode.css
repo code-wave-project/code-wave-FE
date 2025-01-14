@@ -1,0 +1,65 @@
+.tree-node {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.tree-node:hover {
+  background-color: #e8e8e8;
+}
+
+.node-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  flex: 1;
+  color: #333333;
+  font-size: 13px;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-size: 12px;
+  color: #666666;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+.icon {
+  width: 20px;
+  text-align: center;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+.delete-button {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: #999999;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: auto;
+}
+
+.tree-node:hover .delete-button {
+  opacity: 1;
+}
+
+.delete-button:hover {
+  color: #ff4444;
+} 
