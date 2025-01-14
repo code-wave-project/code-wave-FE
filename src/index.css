@@ -1,5 +1,44 @@
+/*Regular*/
+@font-face {
+	font-family: 'Pretendard';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src:
+		url(/fonts/Pretendard-Regular.otf) format('truetype'),
+		url(/fonts/Pretendard-Regular.ttf) format('ttf'),
+		url(/fonts/Pretendard-Regular.woff) format('woff'),
+		url(/fonts/Pretendard-Regular.woff2) format('woff2');
+}
+
+/*Medium*/
+@font-face {
+	font-family: 'Pretendard';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src:
+		url(/fonts/Pretendard-Medium.ttf) format('ttf'),
+		url(/fonts/Pretendard-Medium.otf) format('truetype'),
+		url(/fonts/Pretendard-Medium.ttf) format('woff'),
+		url(/fonts/Pretendard-Medium.woff2) format('woff2');
+}
+
+/*Semibold*/
+@font-face {
+	font-family: 'Pretendard';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src:
+		url(/fonts/Pretendard-SemiBold.ttf) format('ttf'),
+		url(/fonts/Pretendard-SemiBold.otf) format('truetype'),
+		url(/fonts/Pretendard-SemiBold.woff) format('woff'),
+		url(/fonts/Pretendard-SemiBold.woff2) format('woff2');
+}
+
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: 'Pretendard', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
 
