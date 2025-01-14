@@ -3,19 +3,19 @@ import { VscChevronDown, VscAccount, VscBell } from 'react-icons/vsc';
 import '../../styles/components/AppBar.css';
 
 interface AppBarProps {
-  currentPage?: string;
+	currentPage?: string;
 }
 
 const AppBar: React.FC<AppBarProps> = ({ currentPage = 'Current Page' }) => {
-  return (
-    <div className="app-bar">
-      <div className="app-bar-right">
-        <button className="app-bar-button">
-          <VscAccount size={24}/>
-        </button>
-      </div>
-    </div>
-  );
+	return (
+		<div className="app-bar">
+			<div className="app-bar-right">
+				<button className="app-bar-button">
+					<VscAccount size={24} />
+				</button>
+			</div>
+		</div>
+	);
 };
 
-export default AppBar; 
+export default AppBar;

@@ -2,34 +2,34 @@
 .git-panel,
 .debug-panel,
 .extensions-panel {
-  height: 100%;
-  padding: 16px;
-  background-color: #f3f3f3;
-  color: #333333;
-  font-size: 13px;
+	height: 100%;
+	padding: 16px;
+	background-color: #f3f3f3;
+	color: #333333;
+	font-size: 13px;
 }
 
 /* 각 패널별 스타일 커스터마이징이 필요한 경우 추가 */
 .search-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .git-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .debug-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .extensions-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-} 
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}

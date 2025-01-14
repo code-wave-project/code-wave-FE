@@ -1,9 +1,9 @@
 ---
 name: Issue Template
 about: project's issues
-title: ""
-labels: ""
-assignees: ""
+title: ''
+labels: ''
+assignees: ''
 ---
 
 ## 🤔 목적

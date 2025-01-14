@@ -5,17 +5,17 @@ import IDE from './pages/IDE';
 import './App.css';
 
 function App() {
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <Router>
-        <Routes>
-          <Route path="/editor" element={<IDE />} />
-          <Route path="/" element={<Navigate to="/editor" replace />} />
-          <Route path="*" element={<Navigate to="/editor" replace />} />
-        </Routes>
-      </Router>
-    </DndProvider>
-  );
+	return (
+		<DndProvider backend={HTML5Backend}>
+			<Router>
+				<Routes>
+					<Route path="/editor" element={<IDE />} />
+					<Route path="/" element={<Navigate to="/editor" replace />} />
+					<Route path="*" element={<Navigate to="/editor" replace />} />
+				</Routes>
+			</Router>
+		</DndProvider>
+	);
 }
 
 export default App;

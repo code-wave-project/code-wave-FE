@@ -1,6 +1,6 @@
-import { User } from '../../types'
+import { User } from '../../types';
 
 export interface EditorProps {
-  file: string | null;
-  collaborators: User[];
-} 
+	file: string | null;
+	collaborators: User[];
+}
