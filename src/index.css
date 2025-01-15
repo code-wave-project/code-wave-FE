@@ -1,3 +1,16 @@
+/*Light*/
+@font-face {
+	font-family: 'Pretendard';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src:
+		url(/fonts/Pretendard-Light.otf) format('truetype'),
+		url(/fonts/Pretendard-Light.ttf) format('ttf'),
+		url(/fonts/Pretendard-Light.woff) format('woff'),
+		url(/fonts/Pretendard-Light.woff2) format('woff2');
+}
+
 /*Regular*/
 @font-face {
 	font-family: 'Pretendard';
@@ -43,7 +56,7 @@
 	font-weight: 400;
 
 	color-scheme: light;
-	color: #333333;
+	color: #303239;
 	background-color: #ffffff;
 
 	font-synthesis: none;
