@@ -4,9 +4,9 @@ import { COLOR } from '../../const/color';
 export const Container = styled.div`
 	width: 315px;
 	background-color: ${COLOR.WHITE};
-	border-right: 1px solid ${COLOR.GRAY200};
 	display: flex;
 	flex-direction: column;
+	border-right: 4px solid ${COLOR.GRAY100};
 `;
 
 export const Header = styled.div`
@@ -21,8 +21,6 @@ export const Header = styled.div`
 
 export const Content = styled.div`
 	flex: 1;
-	overflow-y: auto;
-	padding: 10px;
 `;
 
 export const CloseButton = styled.span`

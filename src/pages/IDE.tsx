@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SideBar from '../components/IDE/SideBar';
 import SidePanel from '../components/IDE/SidePanel';
+import FileExplorePanel from '../components/IDE/SidePanel/panels/FileExplorePanel';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const IDE: React.FC = () => {
 	// const [activeTab, setActiveTab] = useState('test.jsp');
@@ -15,10 +18,12 @@ const IDE: React.FC = () => {
 			<MainContainer>
 				<ContentWrapper>
 					{activeSidePanel && (
-						<SidePanel
-							title={activeSidePanel === 'files' ? '탐색기' : activeSidePanel === 'chat' ? '채팅' : '코드 스타일'}>
-							{/* Panel content here */}
-						</SidePanel>
+						<DndProvider backend={HTML5Backend}>
+							<SidePanel
+								title={activeSidePanel === 'files' ? '탐색기' : activeSidePanel === 'chat' ? '채팅' : '코드 스타일'}>
+								{activeSidePanel === 'files' ? <FileExplorePanel /> : null}
+							</SidePanel>
+						</DndProvider>
 					)}
 
 					<MainContent>
