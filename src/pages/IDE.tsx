@@ -1,30 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import SideBar from '../components/IDE/SideBar';
+import SidePanel from '../components/IDE/SidePanel';
 
 const IDE: React.FC = () => {
-	const [activeTab, setActiveTab] = useState('test.jsp');
+	// const [activeTab, setActiveTab] = useState('test.jsp');
 	const [activeSidePanel, setActiveSidePanel] = useState<string | null>(null);
-	const tabs = ['test.jsp', 'a.jsp', 'b.jsp'];
+	// const tabs = ['test.jsp', 'a.jsp', 'b.jsp'];
 
 	return (
 		<Container>
-			<Sidebar>
-				<SidebarIcon onClick={() => setActiveSidePanel('explorer')}>⚡</SidebarIcon>
-				<SidebarIcon onClick={() => setActiveSidePanel('files')}>📄</SidebarIcon>
-				<SidebarIcon onClick={() => setActiveSidePanel('chat')}>💬</SidebarIcon>
-				<SidebarIcon onClick={() => setActiveSidePanel('settings')}>⚙️</SidebarIcon>
-				<ThemeToggle>☀️</ThemeToggle>
-			</Sidebar>
+			<SideBar onSidePanelChange={panel => setActiveSidePanel(panel)} activePanel={activeSidePanel} />
 
 			<MainContainer>
 				<ContentWrapper>
 					{activeSidePanel && (
-						<SidePanel>
-							<SidePanelHeader>
-								{activeSidePanel.toUpperCase()}
-								<CloseButton onClick={() => setActiveSidePanel(null)}>×</CloseButton>
-							</SidePanelHeader>
-							<SidePanelContent>{/* Panel content here */}</SidePanelContent>
+						<SidePanel
+							title={activeSidePanel === 'files' ? '탐색기' : activeSidePanel === 'chat' ? '채팅' : '코드 스타일'}>
+							{/* Panel content here */}
 						</SidePanel>
 					)}
 
@@ -39,14 +32,14 @@ const IDE: React.FC = () => {
 								</ViewControls>
 							</TopHeader>
 							<BottomHeader>
-								<TabList>
+								{/* <TabList>
 									{tabs.map(tab => (
 										<Tab key={tab} active={activeTab === tab} onClick={() => setActiveTab(tab)}>
 											{tab}
 											{activeTab === tab && <CloseButton>×</CloseButton>}
 										</Tab>
 									))}
-								</TabList>
+								</TabList> */}
 							</BottomHeader>
 						</HeaderContainer>
 						<Editor>
@@ -88,25 +81,6 @@ const ContentWrapper = styled.div`
 	display: flex;
 	flex: 1;
 	overflow: hidden;
-`;
-
-const Sidebar = styled.div`
-	width: 50px;
-	background-color: #f1f3f5;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 10px;
-`;
-
-const SidebarIcon = styled.div`
-	margin-bottom: 20px;
-	cursor: pointer;
-`;
-
-const ThemeToggle = styled(SidebarIcon)`
-	margin-top: auto;
-	margin-bottom: 20px;
 `;
 
 const MainContent = styled.div`
@@ -217,31 +191,6 @@ const Footer = styled.div`
 const FooterItem = styled.div`
 	font-size: 12px;
 	color: #868e96;
-`;
-
-const SidePanel = styled.div`
-	width: 250px;
-	background-color: #f8f9fa;
-	border-right: 1px solid #dee2e6;
-	display: flex;
-	flex-direction: column;
-`;
-
-const SidePanelHeader = styled.div`
-	padding: 10px;
-	background-color: #f1f3f5;
-	border-bottom: 1px solid #dee2e6;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-size: 12px;
-	font-weight: bold;
-`;
-
-const SidePanelContent = styled.div`
-	flex: 1;
-	overflow-y: auto;
-	padding: 10px;
 `;
 
 export default IDE;
