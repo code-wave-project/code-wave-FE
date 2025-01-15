@@ -4,7 +4,8 @@ import logoDashboard from '../../../assets/logos/logo_dashboard.png';
 import EditorMenuExplorer from '../../../assets/icons/editor_menu_explorer.svg?react';
 import EditorMenuChat from '../../../assets/icons/editor_menu_chat.svg?react';
 import EditorMenuPrettier from '../../../assets/icons/editor_menu_prettier.svg?react';
-import EditorBottomOn from '../../../assets/icons/editor_bottom_on.svg?react';
+import ThemeLight from '../../../assets/icons/theme_light.svg?react';
+import ThemeDark from '../../../assets/icons/theme_dark.svg?react';
 
 interface SideBarProps {
 	onSidePanelChange: (panel: string | null) => void;
@@ -33,7 +34,7 @@ const SideBar: React.FC<SideBarProps> = ({ onSidePanelChange, activePanel }) => 
 				<EditorMenuPrettier />
 			</SidebarIcon>
 			<ThemeToggle>
-				<EditorBottomOn />
+				<ThemeLight />
 			</ThemeToggle>
 		</Container>
 	);
