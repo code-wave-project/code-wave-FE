@@ -5,6 +5,7 @@ import SidePanel from '../components/IDE/SidePanel';
 import FileExplorePanel from '../components/IDE/SidePanel/panels/FileExplorePanel';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import ChatPanel from '../components/IDE/SidePanel/panels/ChatPanel';
 
 const IDE: React.FC = () => {
 	// const [activeTab, setActiveTab] = useState('test.jsp');
@@ -21,7 +22,7 @@ const IDE: React.FC = () => {
 						<DndProvider backend={HTML5Backend}>
 							<SidePanel
 								title={activeSidePanel === 'files' ? '탐색기' : activeSidePanel === 'chat' ? '채팅' : '코드 스타일'}>
-								{activeSidePanel === 'files' ? <FileExplorePanel /> : null}
+								{activeSidePanel === 'files' ? <FileExplorePanel /> : activeSidePanel === 'chat' ? <ChatPanel /> : null}
 							</SidePanel>
 						</DndProvider>
 					)}
