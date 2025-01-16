@@ -5,7 +5,6 @@ import EditorMenuExplorer from '../../../assets/icons/editor_menu_explorer.svg?r
 import EditorMenuChat from '../../../assets/icons/editor_menu_chat.svg?react';
 import EditorMenuPrettier from '../../../assets/icons/editor_menu_prettier.svg?react';
 import ThemeLight from '../../../assets/icons/theme_light.svg?react';
-import ThemeDark from '../../../assets/icons/theme_dark.svg?react';
 
 interface SideBarProps {
 	onSidePanelChange: (panel: string | null) => void;
