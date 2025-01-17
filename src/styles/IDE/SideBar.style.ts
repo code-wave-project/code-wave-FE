@@ -7,8 +7,9 @@ interface SidebarIconProps {
 
 export const Container = styled.div`
 	width: 140px;
+	min-width: 140px;
 	background-color: ${COLOR.WHITE};
-	border-right: 4px solid ${COLOR.GRAY200};
+	border-right: 4px solid ${COLOR.GRAY100};
 	display: flex;
 	flex-direction: column;
 	align-items: center;

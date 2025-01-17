@@ -6,11 +6,15 @@ import FileExplorePanel from '../components/IDE/SidePanel/panels/FileExplorePane
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import ChatPanel from '../components/IDE/SidePanel/panels/ChatPanel';
+import Editor from '../components/IDE/Editor';
+import { COLOR } from '../const/color';
 
 const IDE: React.FC = () => {
-	// const [activeTab, setActiveTab] = useState('test.jsp');
 	const [activeSidePanel, setActiveSidePanel] = useState<string | null>(null);
-	// const tabs = ['test.jsp', 'a.jsp', 'b.jsp'];
+	const [code, setCode] = useState('');
+
+	const [files, setFiles] = useState([]);
+	const [openTabs, setOpenTabs] = useState(['test.jsp']);
 
 	return (
 		<Container>
@@ -48,16 +52,8 @@ const IDE: React.FC = () => {
 								</TabList> */}
 							</BottomHeader>
 						</HeaderContainer>
-						<Editor>
-							<LineNumbers>
-								{Array.from({ length: 10 }, (_, i) => (
-									<LineNumber key={i}>{i + 1}</LineNumber>
-								))}
-							</LineNumbers>
-							<EditorContent>
-								<CodeLine>// hello world</CodeLine>
-							</EditorContent>
-						</Editor>
+
+						<Editor defaultValue={code} onChange={value => setCode(value || '')} language="go" />
 					</MainContent>
 				</ContentWrapper>
 
@@ -74,6 +70,7 @@ const IDE: React.FC = () => {
 const Container = styled.div`
 	display: flex;
 	height: 100vh;
+	width: 100vw;
 	background-color: #f8f9fa;
 `;
 
@@ -90,6 +87,7 @@ const ContentWrapper = styled.div`
 `;
 
 const MainContent = styled.div`
+	max-width: 100%;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -157,41 +155,12 @@ const ViewButton = styled.button`
 	cursor: pointer;
 `;
 
-const Editor = styled.div`
-	flex: 1;
-	display: flex;
-	background-color: #fff;
-`;
-
-const LineNumbers = styled.div`
-	width: 40px;
-	padding: 10px 0;
-	background-color: #f8f9fa;
-	text-align: right;
-`;
-
-const LineNumber = styled.div`
-	color: #868e96;
-	padding: 0 5px;
-	font-size: 12px;
-`;
-
-const EditorContent = styled.div`
-	flex: 1;
-	padding: 10px;
-`;
-
-const CodeLine = styled.div`
-	font-family: monospace;
-	color: #40c057;
-`;
-
 const Footer = styled.div`
 	display: flex;
 	gap: 15px;
 	padding: 5px 10px;
 	background-color: #f8f9fa;
-	border-top: 1px solid #dee2e6;
+	border-top: 4px solid ${COLOR.GRAY100};
 `;
 
 const FooterItem = styled.div`
