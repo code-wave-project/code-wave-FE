@@ -1,15 +1,18 @@
 import type { ChattingPanelProps } from './ChattingPanel.d';
 import { ChattingContent, ChattingHeader, ChattingInput, Container } from './ChattingPanel.style';
-import { ChatSearchInput } from './ChatSearchInput/ChatSearchInput';
+import { SearchChattingInput } from './Inputs/SearchChattingInput/SearchChattingInput';
+import { SendChattingInput } from './Inputs/SendChattingInput/SendChattingInput';
 
 export const ChattingPanel: React.FC<ChattingPanelProps> = () => {
 	return (
 		<Container>
 			<ChattingHeader>
-				<ChatSearchInput value="" onChange={() => {}} />
+				<SearchChattingInput />
 			</ChattingHeader>
 			<ChattingContent />
-			<ChattingInput />
+			<ChattingInput>
+				<SendChattingInput />
+			</ChattingInput>
 		</Container>
 	);
 };

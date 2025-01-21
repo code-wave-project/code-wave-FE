@@ -7,21 +7,20 @@ export const Container = styled.div`
 `;
 
 export const ChattingHeader = styled.div`
-	height: 48px;
+	height: 4rem;
 	background-color: #252526;
 	font-size: 16px;
-	font-weight: 600;
-	background-color: #fff;
-	flex-shrink: 0;
+	padding: 0 1rem 1rem 1rem;
+	border-bottom: 3px solid #fff;
 `;
 
 export const ChattingContent = styled.div`
 	flex: 1;
 	overflow: hidden;
-	background-color: #fff111;
 `;
 
 export const ChattingInput = styled.div`
-	height: 48px;
-	background-color: #fff;
+	border-top: 3px solid #fff;
+	height: 5rem;
+	padding: 1rem;
 `;
