@@ -70,7 +70,9 @@ const IDE: React.FC = () => {
 const Container = styled.div`
 	display: flex;
 	height: 100vh;
-	width: 100vw;
+	width: 100%;
+	min-width: 1024px;
+	overflow: scroll;
 	background-color: #f8f9fa;
 `;
 

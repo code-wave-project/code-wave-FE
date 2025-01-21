@@ -6,8 +6,8 @@ interface SidebarIconProps {
 }
 
 export const Container = styled.div`
-	width: 140px;
-	min-width: 140px;
+	width: 8rem;
+	min-width: 8rem;
 	background-color: ${COLOR.WHITE};
 	border-right: 4px solid ${COLOR.GRAY100};
 	display: flex;
@@ -16,13 +16,13 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.div`
-	height: 140px;
 	width: 100%;
+	height: 140px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	img {
-		width: 48px;
+		width: 40px;
 		padding-bottom: 24px;
 		border-bottom: 1px solid ${COLOR.GRAY200};
 	}
@@ -30,7 +30,7 @@ export const Logo = styled.div`
 
 export const SidebarIcon = styled.div<SidebarIconProps>`
 	width: 100%;
-	height: 80px;
+	height: 60px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -38,13 +38,15 @@ export const SidebarIcon = styled.div<SidebarIconProps>`
 	cursor: pointer;
 	color: ${props => (props.$active ? COLOR.BLUE500 : COLOR.GRAY500)};
 
+	transition: color 0.2s ease-in-out;
+
 	&:hover {
-		color: ${COLOR.BLUE500};
+		color: ${props => (props.$active ? COLOR.BLUE500 : COLOR.BLUE300)};
 	}
 
 	svg {
-		width: 48px;
-		height: 48px;
+		width: 32px;
+		height: 32px;
 	}
 `;
 

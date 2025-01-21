@@ -21,6 +21,7 @@ const Editor: React.FC<EditorProps> = ({ language = 'javascript', defaultValue =
 			defaultValue={defaultValue}
 			onChange={onChange}
 			onMount={handleEditorDidMount}
+			width="100%"
 			theme="vs"
 			options={{
 				minimap: { enabled: true },
