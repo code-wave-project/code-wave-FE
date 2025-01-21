@@ -27,7 +27,13 @@
 		"paths": {
 			"@/*": ["src/*"],
 			"@components/*": ["src/components/*"],
-			"@pages/*": ["src/pages/*"]
+			"@pages/*": ["src/pages/*"],
+			"@assets/*": ["src/assets/*"],
+			"@const/*": ["src/const/*"],
+			"@store/*": ["src/store/*"],
+			"@styles/*": ["src/styles/*"],
+			"@types/*": ["src/types/*"],
+			"@utils/*": ["src/utils/*"]
 		}
 	},
 	"include": ["src"]
