@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const PanelContainer = styled.div`
 	width: 20rem;
+	min-width: 20rem;
 	background-color: ${({ theme }) => theme.COLOR.WHITE};
 	height: 100%;
 	border-right: 3px solid ${({ theme }) => theme.COLOR.GRAY200};
