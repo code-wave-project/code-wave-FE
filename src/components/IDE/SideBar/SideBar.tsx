@@ -8,10 +8,11 @@ import LogoImage from '@assets/logos/logo_dashboard.png';
 const SidebarContainer = styled.div`
 	width: 5rem;
 	min-width: 5rem;
-	background-color: #333;
+	background-color: ${({ theme }) => theme.COLOR.WHITE};
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	border-right: 3px solid ${({ theme }) => theme.COLOR.GRAY200};
 `;
 
 const NavButtonList = styled.nav`
@@ -33,7 +34,7 @@ const Logo = styled.div`
 const LogoImg = styled.img`
 	padding: 2rem 0;
 	margin-bottom: 1rem;
-	border-bottom: 1px solid #fff;
+	border-bottom: 2px solid ${({ theme }) => theme.COLOR.GRAY200};
 `;
 
 export interface SidebarProps {
