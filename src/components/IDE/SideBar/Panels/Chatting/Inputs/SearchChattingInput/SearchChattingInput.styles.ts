@@ -18,7 +18,6 @@ export const SearchInput = styled.input`
 	outline: none;
 	border: none;
 	background-color: transparent;
-	padding-left: 0.5rem;
 `;
 
 export const LeadingIcon = styled.div`
@@ -28,6 +27,7 @@ export const LeadingIcon = styled.div`
 	width: 2rem;
 	height: 2rem;
 	background-color: transparent;
+	padding-right: 0.5rem;
 `;
 
 export const TrailingIconList = styled.div`
@@ -43,6 +43,12 @@ export const TrailingIcon = styled.div`
 	width: 2rem;
 	height: 2rem;
 	background-color: transparent;
+	cursor: pointer;
+
+	:hover {
+		border-radius: 0.5rem;
+		background-color: ${COLOR.GRAY200};
+	}
 
 	svg {
 		width: 1.5rem;

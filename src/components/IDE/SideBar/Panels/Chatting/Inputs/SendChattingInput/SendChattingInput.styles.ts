@@ -21,12 +21,25 @@ export const SendInput = styled.input`
 	background-color: transparent;
 `;
 
-export const SendIconContainer = styled.div`
+export const SendIconContainer = styled.div<{ hasMessage: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 3rem;
 	height: 2rem;
 	background-color: transparent;
-	padding-left: 0.5rem;
+	cursor: ${({ hasMessage }) => (hasMessage ? 'pointer' : 'default')};
+
+	:hover {
+		border-radius: 0.5rem;
+		background-color: ${({ hasMessage }) => (hasMessage ? COLOR.GRAY200 : 'transparent')};
+	}
+
+	svg {
+		width: 1.5rem;
+		height: 1.5rem;
+		path {
+			fill: ${({ hasMessage, theme }) => (hasMessage ? theme.COLOR.BLUE500 : theme.COLOR.GRAY400)};
+		}
+	}
 `;

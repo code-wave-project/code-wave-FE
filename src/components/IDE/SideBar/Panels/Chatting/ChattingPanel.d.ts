@@ -1,8 +1,8 @@
-export interface Message {
+export interface ChatMessage {
 	id: string;
-	content: string;
-	timestamp: Date;
-	user: string;
+	message: string;
+	isMe: boolean;
+	timestamp: string;
+	date: string;
+	username: string;
 }
-
-export interface ChattingPanelProps {}
