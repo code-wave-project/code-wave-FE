@@ -45,10 +45,9 @@ const Logo = styled.img`
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.COLOR.GRAY300};
-  border-radius: 0.5rem;
   font-size: 1rem;
 `;
 
