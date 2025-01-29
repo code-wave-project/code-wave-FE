@@ -74,7 +74,7 @@ const CheckboxInput = styled.input`
 `;
 
 const FindAccount = styled.button`
-  color: ${({ theme }) => theme.COLOR.BLUE500};
+  color: ${({ theme }) => theme.COLOR.GRAY500};
   font-size: 1rem;
   cursor: pointer;
 `;
@@ -148,7 +148,7 @@ const Login = () => {
               />
               로그인 유지
             </CheckboxLabel>
-            <FindAccount>아이디/비밀번호 찾기</FindAccount>
+            <FindAccount>아이디/비밀번호</FindAccount>
         </LoginOptions>
         <LoginButton>로그인</LoginButton>
         <SNSTitle>SNS로 간편하게 로그인</SNSTitle>
