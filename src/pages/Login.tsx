@@ -1,6 +1,7 @@
 // import * as S from '@/styles/pages/Login.style';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logoHeader from '../assets/logos/logo_header.png';
 import logoGoogle from '../assets/icons/login_google.svg';
@@ -172,6 +173,22 @@ const SignupButton = styled.button`
 const Login = () => {
   const [rememberAccount, setRememberAccount] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [userID, setUserID] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
+  const navigate = useNavigate(); 
+
+  const handleLogin = () => {
+    const validUsername = 'user';
+    const validPassword = '1234';
+
+    if (userID === validUsername && password === validPassword) {
+      setLoginError(false);
+      navigate('/dashboard');
+    } else {
+      setLoginError(true);
+    }
+  };
 
   return (
     <OuterContainer>
@@ -180,12 +197,17 @@ const Login = () => {
 			<Logo src={logoHeader}/>
 			<Title>로그인</Title>
 		</TitleContainer>
-        <Input type="text" placeholder="아이디를 입력하세요" />
+        <Input type="text"
+			placeholder="아이디를 입력하세요"
+			value={userID}
+			onChange={(e) => setUserID(e.target.value)} />
+		{loginError && <div style={{ color: 'red', marginBottom: '1rem', fontSize: '10px' }}>아이디나 비밀번호가 올바르지 않습니다.</div>}
         <InputContainer>
           <Input
             type={passwordVisible ? "text" : "password"}
             placeholder="비밀번호를 입력하세요"
-          />
+			value={password}
+            onChange={(e) => setPassword(e.target.value)} />
           <PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
             <img src={passwordVisible ? passwordShow : passwordHide}/>
           </PasswordShowButton>
@@ -199,15 +221,15 @@ const Login = () => {
               />
               로그인 유지
             </CheckboxLabel>
-            <FindAccount>아이디/비밀번호</FindAccount>
+            <FindAccount onClick={() => navigate('/find')}>아이디/비밀번호</FindAccount>
         </LoginOptions>
-        <LoginButton>로그인</LoginButton>
+        <LoginButton onClick={handleLogin}>로그인</LoginButton>
         <SNSTitle>SNS로 간편하게 로그인</SNSTitle>
         <SNSContainer>
           <SNSButton><img src={logoGoogle}/></SNSButton>
           <SNSButton><img src={logoKakao}/></SNSButton>
         </SNSContainer>
-        <SignupButton>회원가입</SignupButton>
+        <SignupButton onClick={() => navigate('/signup')}>회원가입</SignupButton>
       </LoginBox>
     </OuterContainer>
   );
