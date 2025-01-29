@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import logoHeader from '../assets/logos/logo_header.png';
 import logoGoogle from '../assets/icons/login_google.svg';
 import logoKakao from '../assets/icons/login_kakao.svg';
+import passwordShow from '../assets/icons/password_show.svg';
+import passwordHide from '../assets/icons/password_hide.svg';
+
 
 const OuterContainer = styled.div`
   width: 100%;
@@ -43,12 +46,27 @@ const Logo = styled.img`
 	height: 2rem;
 `
 
+const InputContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
 const Input = styled.input`
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.COLOR.GRAY300};
   font-size: 1rem;
+`;
+
+const PasswordShowButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-100%);
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
 
 const LoginOptions = styled.div`
@@ -153,6 +171,7 @@ const SignupButton = styled.button`
 
 const Login = () => {
   const [rememberAccount, setRememberAccount] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <OuterContainer>
@@ -162,7 +181,15 @@ const Login = () => {
 			<Title>로그인</Title>
 		</TitleContainer>
         <Input type="text" placeholder="아이디를 입력하세요" />
-        <Input type="password" placeholder="비밀번호를 입력하세요" />
+        <InputContainer>
+          <Input
+            type={passwordVisible ? "text" : "password"}
+            placeholder="비밀번호를 입력하세요"
+          />
+          <PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
+            <img src={passwordVisible ? passwordShow : passwordHide}/>
+          </PasswordShowButton>
+        </InputContainer>
         <LoginOptions>
             <CheckboxLabel>
               <CheckboxInput
