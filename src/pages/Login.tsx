@@ -70,7 +70,32 @@ const CheckboxLabel = styled.label`
 `;
 
 const CheckboxInput = styled.input`
-  margin-right: 10px;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  border: 1px solid ${({ theme }) => theme.COLOR.GRAY300}; 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+
+  &:checked {
+    border-color: ${({ theme }) => theme.COLOR.BLUE500};
+    background-color: ${({ theme }) => theme.COLOR.WHITE};
+    position: relative;
+  }
+
+  &:checked::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: ${({ theme }) => theme.COLOR.BLUE500};
+    border-radius: 50%;
+    position: absolute;
+  }
 `;
 
 const FindAccount = styled.button`
@@ -128,7 +153,7 @@ const SignupButton = styled.button`
 `;
 
 const Login = () => {
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberAccount, setRememberAccount] = useState(false);
 
   return (
     <OuterContainer>
@@ -143,8 +168,8 @@ const Login = () => {
             <CheckboxLabel>
               <CheckboxInput
                 type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
+                checked={rememberAccount}
+                onChange={() => setRememberAccount(!rememberAccount)}
               />
               로그인 유지
             </CheckboxLabel>
