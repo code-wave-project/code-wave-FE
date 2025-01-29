@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import styled from 'styled-components';
+import logoHeader from '../assets/logos/logo_header.png';
+import logoGoogle from '../assets/icons/login_google.svg';
+import logoKakao from '../assets/icons/login_kakao.svg';
 
 const OuterContainer = styled.div`
   width: 100%;
@@ -20,12 +23,25 @@ const LoginBox = styled.div`
   text-align: center;
 `;
 
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: ${({ theme }) => theme.COLOR.GRAY700};
 `;
+
+const Logo = styled.img`
+    width: auto;
+	height: 2rem;
+`
 
 const Input = styled.input`
   width: 100%;
@@ -86,12 +102,14 @@ const SNSContainer = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const SNSButton = styled.button`
   background: none;
-  border: none;
+  border: 1px solid ${({ theme }) => theme.COLOR.GRAY100};
+  border-radius: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
 `;
@@ -115,7 +133,10 @@ const Login = () => {
   return (
     <OuterContainer>
       <LoginBox>
-        <Title>로그인</Title>
+		<TitleContainer>
+			<Logo src={logoHeader}/>
+			<Title>로그인</Title>
+		</TitleContainer>
         <Input type="text" placeholder="아이디를 입력하세요" />
         <Input type="password" placeholder="비밀번호를 입력하세요" />
         <LoginOptions>
@@ -132,8 +153,8 @@ const Login = () => {
         <LoginButton>로그인</LoginButton>
         <SNSTitle>SNS로 간편하게 로그인</SNSTitle>
         <SNSContainer>
-          <SNSButton>🔵</SNSButton> {/* Google */}
-          <SNSButton>⚫</SNSButton> {/* Kakao */}
+          <SNSButton><img src={logoGoogle}/></SNSButton>
+          <SNSButton><img src={logoKakao}/></SNSButton>
         </SNSContainer>
         <SignupButton>회원가입</SignupButton>
       </LoginBox>
