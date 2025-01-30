@@ -8,8 +8,8 @@ const meta = {
 	parameters: {
 		layout: 'centered',
 		backgrounds: {
-			default: 'dark',
-			values: [{ name: 'dark', value: '#1e1e1e' }],
+			default: 'light',
+			values: [{ name: 'light', value: '#ffffff' }],
 		},
 		pseudoStates: {
 			hover: true,
