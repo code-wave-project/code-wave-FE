@@ -4,7 +4,7 @@ import { Sidebar } from '@/components/IDE/SideBar/SideBar';
 import { Panel } from '@components/IDE/SideBar/Panels/Panel';
 import { Editor } from '@/components/IDE/Editor/Editor';
 
-export type PanelType = 'files' | 'chat' | null;
+export type PanelType = 'files' | 'chat' | 'CodeStyle' | null;
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -39,7 +39,7 @@ export interface IDEProps {
 const IDE: React.FC<IDEProps> = ({ initialPanel = null }) => {
 	const [openPanel, setOpenPanel] = useState<PanelType>(initialPanel);
 
-	const handlePanelToggle = (panel: 'files' | 'chat') => {
+	const handlePanelToggle = (panel: 'files' | 'chat' | 'CodeStyle' | null) => {
 		const newPanel = openPanel === panel ? null : panel;
 		setOpenPanel(newPanel);
 	};

@@ -12,6 +12,7 @@ export const Panel: React.FC<PanelProps> = ({ openPanel }) => {
 			<PanelHeader>
 				{openPanel === 'files' && '파일 탐색기'}
 				{openPanel === 'chat' && '채팅'}
+				{openPanel === 'CodeStyle' && '코드 스타일'}
 			</PanelHeader>
 			<PanelContent>
 				{openPanel === 'files' && <FileExplorePanel />}
