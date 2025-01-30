@@ -6,5 +6,5 @@ export interface TabType {
 }
 
 export interface EditorProps {
-	onSave?: (path: string, content: string) => void;
+	onSave: (path: string, content: string) => void;
 }

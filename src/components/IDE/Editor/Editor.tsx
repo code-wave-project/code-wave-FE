@@ -84,20 +84,30 @@ export const Editor: React.FC<EditorProps> = ({ onSave }) => {
 		if (activeTabId && editorRef.current) {
 			const activeTab = tabs.find(tab => tab.id === activeTabId);
 			if (activeTab) {
-				editorRef.current.setValue(activeTab.content);
+				// 현재 모델 가져오기
+				const currentModel = editorRef.current.getModel();
 
-				const extension = activeTab.path.split('.').pop() || '';
-				const language = getLanguageFromExtension(extension); // 확장자에 따라 언어 설정
-				const model = editorRef.current.getModel(); // 현재 모델 가져오기
-				if (model) {
-					monaco.editor.setModelLanguage(model, language); // 모델 언어 설정
-				} else {
-					const newModel = monaco.editor.createModel(activeTab.content, language); // 새 모델 생성
-					editorRef.current.setModel(newModel); // 새 모델 설정
+				// 새로운 모델 생성 전에 이전 모델 dispose
+				if (currentModel) {
+					currentModel.dispose();
 				}
+
+				// 새 모델 생성 및 설정
+				const extension = activeTab.path.split('.').pop() || '';
+				const language = getLanguageFromExtension(extension);
+				const newModel = monaco.editor.createModel(activeTab.content, language);
+				editorRef.current.setModel(newModel);
 			}
 		}
-	}, [activeTabId]);
+
+		// cleanup 함수에서 모델 dispose
+		return () => {
+			const model = editorRef.current?.getModel();
+			if (model) {
+				model.dispose();
+			}
+		};
+	}, [activeTabId, tabs]);
 
 	const closeTab = (tabId: string, event: React.MouseEvent) => {
 		event.stopPropagation();
