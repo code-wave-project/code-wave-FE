@@ -4,7 +4,7 @@ export const AppBarContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 4rem;
+	height: 3.5rem;
 	padding: 0 1rem;
 	background-color: ${({ theme }) => theme.COLOR.WHITE};
 	border-bottom: 1px solid ${({ theme }) => theme.COLOR.GRAY200};
@@ -49,8 +49,8 @@ export const ProfileSection = styled.div`
 	gap: 0.5rem;
 
 	svg {
-		width: 1.5rem;
-		height: 1.5rem;
+		width: 1rem;
+		height: 1rem;
 	}
 `;
 

@@ -25,7 +25,6 @@ export const AppBar: React.FC = () => {
 
 	const handleLogout = () => {
 		// 로그아웃 로직 구현
-		console.log('Logout clicked');
 		setIsDropdownOpen(false);
 	};
 
