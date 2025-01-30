@@ -9,6 +9,7 @@ import SignUp from '@pages/SignUp';
 import FindAccount from '@pages/FindAccount';
 import ResetPassword from '@pages/ResetPassword';
 import Dashboard from '@pages/Dashboard';
+import Profile from '@pages/Profile';
 import ErrorServer from '@pages/ErrorServer';
 import ErrorNon from '@pages/ErrorNon';
 import '@/App.css';
@@ -28,6 +29,7 @@ function App() {
 					{/* <Route element={<PrivateRoute />}> */}
 					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/editor" element={<IDE />} />
+					<Route path="/profile" element={<Profile />} />
 					{/* </Route> */}
 					<Route path="/error" element={<ErrorServer />} />
 					<Route path="/*" element={<ErrorNon />} />
