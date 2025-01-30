@@ -16,9 +16,9 @@ export const TabBar = styled.div`
 export const Tab = styled.div<{ isActive: boolean }>`
 	display: flex;
 	align-items: center;
-	padding: 0 16px;
-	min-width: 120px;
-	max-width: 200px;
+	padding: 0 1rem;
+	min-width: 10rem;
+	max-width: 20rem;
 	height: 100%;
 	cursor: pointer;
 	background-color: ${({ isActive, theme }) => (isActive ? theme.COLOR.GRAY200 : theme.COLOR.WHITE)};
@@ -43,7 +43,7 @@ export const CloseButton = styled.button`
 	justify-content: center;
 	width: 1rem;
 	height: 1rem;
-	margin-left: 8px;
+	margin-left: 0.5rem;
 	border: none;
 	cursor: pointer;
 	padding: 0;

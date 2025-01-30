@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const ChattingHeader = styled.div`
 	background-color: ${({ theme }) => theme.COLOR.WHITE};
-	font-size: 16px;
+	font-size: 1rem;
 	padding: 0 1rem;
 `;
 

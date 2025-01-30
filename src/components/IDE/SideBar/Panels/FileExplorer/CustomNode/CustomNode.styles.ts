@@ -4,7 +4,7 @@ export const Container = styled.div`
 	display: flex;
 	align-items: center;
 	height: 2rem;
-	padding-inline-end: 8px;
+	padding-inline-end: 0.5rem;
 	cursor: pointer;
 	position: relative;
 

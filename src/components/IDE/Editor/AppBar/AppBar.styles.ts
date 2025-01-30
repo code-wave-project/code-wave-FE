@@ -4,8 +4,8 @@ export const AppBarContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 48px;
-	padding: 0 16px;
+	height: 4rem;
+	padding: 0 1rem;
 	background-color: ${({ theme }) => theme.COLOR.WHITE};
 	border-bottom: 1px solid ${({ theme }) => theme.COLOR.GRAY200};
 `;
@@ -24,8 +24,8 @@ export const HomeButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
+	width: 2rem;
+	height: 2rem;
 	border: none;
 	background: none;
 	cursor: pointer;
@@ -36,8 +36,8 @@ export const HomeButton = styled.button`
 	}
 
 	svg {
-		width: 24px;
-		height: 24px;
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 `;
 
@@ -46,17 +46,17 @@ export const ProfileSection = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	gap: 8px;
+	gap: 0.5rem;
 
 	svg {
-		width: 16px;
-		height: 16px;
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 `;
 
 export const ProfileCircle = styled.div`
-	width: 32px;
-	height: 32px;
+	width: 2rem;
+	height: 2rem;
 	border-radius: 50%;
 	background-color: ${({ theme }) => theme.COLOR.GRAY300};
 `;
@@ -65,21 +65,21 @@ export const DropdownMenu = styled.div`
 	position: absolute;
 	top: 100%;
 	right: 0;
-	margin-top: 8px;
+	margin-top: 0.5rem;
 	background-color: ${({ theme }) => theme.COLOR.WHITE};
 	border: 1px solid ${({ theme }) => theme.COLOR.GRAY200};
-	border-radius: 8px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	min-width: 160px;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+	min-width: 10rem;
 	z-index: 1000;
 `;
 
 export const MenuItem = styled.button`
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 0.5rem;
 	width: 100%;
-	padding: 8px 16px;
+	padding: 0.5rem 1rem;
 	border: none;
 	background: none;
 	cursor: pointer;
@@ -87,8 +87,8 @@ export const MenuItem = styled.button`
 	font-size: 0.875rem;
 
 	svg {
-		width: 16px;
-		height: 16px;
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 
 	&:hover {

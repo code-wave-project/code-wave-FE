@@ -1,4 +1,3 @@
-import { COLOR } from '@/const/color';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -9,7 +8,7 @@ export const Container = styled.div`
 	justify-content: center;
 	border-radius: 0.5rem;
 	padding: 0 0.5rem;
-	background-color: ${COLOR.GRAY100};
+	background-color: ${({ theme }) => theme.COLOR.GRAY100};
 `;
 
 export const SearchInput = styled.input`
@@ -47,7 +46,7 @@ export const TrailingIcon = styled.div`
 
 	:hover {
 		border-radius: 0.5rem;
-		background-color: ${COLOR.GRAY200};
+		background-color: ${({ theme }) => theme.COLOR.GRAY200};
 	}
 
 	svg {
