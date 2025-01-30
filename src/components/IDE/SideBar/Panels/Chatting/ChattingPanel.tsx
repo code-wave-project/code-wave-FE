@@ -1,6 +1,5 @@
 import { ChattingBubble } from './ChattingBubble/ChattingBubble';
 import { ChattingContent, ChattingHeader, ChattingInput, Container } from './ChattingPanel.style';
-import { SearchChattingInput } from './Inputs/SearchChattingInput/SearchChattingInput';
 import { SendChattingInput } from './Inputs/SendChattingInput/SendChattingInput';
 import { ChatMessage } from './ChattingPanel.d';
 import { DateDivider } from './DateDivider/DateDivider';
@@ -43,9 +42,7 @@ export const ChattingPanel: React.FC = () => {
 
 	return (
 		<Container>
-			<ChattingHeader>
-				<SearchChattingInput />
-			</ChattingHeader>
+			<ChattingHeader></ChattingHeader>
 			<ChattingContent>
 				{messages.map((message, index) => {
 					// 이전 메시지가 있고, 같은 사용자의 메시지인 경우 유저네임을 숨김

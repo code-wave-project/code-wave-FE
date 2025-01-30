@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import LintIcon from '@/assets/icons/editor_error.svg?react';
 import ErrorIcon from '@/assets/icons/chat_reset.svg?react';
-import TerminalIcon from '@/assets/icons/editor_terminal.svg?react';
 
 const FooterContainer = styled.div`
 	display: flex;
@@ -38,9 +37,6 @@ const Footer: React.FC = () => {
 				<FooterButton>
 					2
 					<ErrorIcon />
-				</FooterButton>
-				<FooterButton>
-					<TerminalIcon />
 				</FooterButton>
 			</FooterButtonContainer>
 		</FooterContainer>

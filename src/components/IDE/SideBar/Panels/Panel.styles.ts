@@ -19,6 +19,7 @@ export const PanelHeader = styled.div`
 	font-weight: 600;
 	color: ${({ theme }) => theme.COLOR.GRAY700};
 	flex-shrink: 0;
+	border-bottom: 3px solid ${({ theme }) => theme.COLOR.GRAY200};
 `;
 
 export const PanelContent = styled.div`
