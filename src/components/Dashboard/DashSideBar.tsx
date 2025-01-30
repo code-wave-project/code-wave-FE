@@ -9,9 +9,12 @@ import DarkMode from '@/assets/icons/theme_dark.svg';
 import MenuIcon from '@assets/icons/dashboard_menu_project.svg?react';
 import RecentIcon from '@assets/icons/dashboard_menu_recent.svg?react';
 
-function DashSideBar() {
-	// 현재 선택된 메뉴 상태 (초기값: "모든 프로젝트")
-	const [selectedMenu, setSelectedMenu] = useState<'all' | 'recent'>('all');
+interface DashSideBarProps {
+	selectedMenu: 'all' | 'recent';
+	setSelectedMenu: (menu: 'all' | 'recent') => void;
+}
+
+function DashSideBar({ selectedMenu, setSelectedMenu }: DashSideBarProps) {
 	// 다크 모드 상태
 	const [isDarkMode, setIsDarkMode] = useState(false);
 
