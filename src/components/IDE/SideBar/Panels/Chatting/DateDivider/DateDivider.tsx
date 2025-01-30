@@ -33,9 +33,6 @@ const formatDateDivider = (dateString: string): string => {
 
 export const DateDivider: React.FC<DateDividerProps> = ({ date }) => {
 	const formattedDate = formatDateDivider(date);
-
-	console.log(formattedDate);
-
 	return (
 		<DividerContainer>
 			<DividerContent>{formattedDate}</DividerContent>
