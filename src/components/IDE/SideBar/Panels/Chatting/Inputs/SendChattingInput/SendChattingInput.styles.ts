@@ -1,4 +1,3 @@
-import { COLOR } from '@/const/color';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -8,7 +7,7 @@ export const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	border-radius: 0.5rem;
-	background-color: ${COLOR.GRAY100};
+	background-color: ${({ theme }) => theme.COLOR.GRAY100};
 	padding: 0 0.5rem;
 `;
 
@@ -32,7 +31,7 @@ export const SendIconContainer = styled.div<{ hasMessage: boolean }>`
 
 	:hover {
 		border-radius: 0.5rem;
-		background-color: ${({ hasMessage }) => (hasMessage ? COLOR.GRAY200 : 'transparent')};
+		background-color: ${({ hasMessage, theme }) => (hasMessage ? theme.COLOR.GRAY200 : 'transparent')};
 	}
 
 	svg {
