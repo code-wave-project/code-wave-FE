@@ -54,3 +54,19 @@ export const ProjectSpace = styled.div`
 	row-gap: 24px;
 	column-gap: 16px;
 `;
+
+export const NonProject = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+
+	color: ${COLOR.GRAY500};
+	font-feature-settings:
+		'liga' off,
+		'clig' off;
+	font-size: 16px;
+	font-weight: 400;
+`;
