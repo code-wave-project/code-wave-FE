@@ -1,9 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react()],
+	plugins: [
+		react(),
+		svgr({
+			svgrOptions: {
+				icon: true, // 아이콘을 위한 설정
+			},
+		}),
+	],
 	resolve: {
 		alias: [
 			{ find: '@', replacement: '/src' },
