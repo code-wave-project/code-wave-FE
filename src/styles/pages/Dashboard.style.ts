@@ -4,6 +4,8 @@ import { COLOR } from '@/const/color';
 export const Dashboard = styled.div`
 	display: flex;
 	width: 100vw;
+	height: 100vh;
+	overflow-y: hidden;
 `;
 
 export const Space = styled.div`
@@ -40,4 +42,15 @@ export const Button = styled.div`
 	font-weight: 400;
 	line-height: normal;
 	cursor: pointer;
+`;
+
+export const ProjectSpace = styled.div`
+	display: flex;
+	padding: 0 39px 30px 48px;
+	width: calc(100vw - 240px);
+	height: calc(100vh - 174px);
+	overflow-y: scroll;
+	flex-wrap: wrap;
+	row-gap: 24px;
+	column-gap: 16px;
 `;
