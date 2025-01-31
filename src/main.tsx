@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '@styles/GlobalStyles';
 import theme from '@styles/theme';
 import { StrictMode } from 'react';
