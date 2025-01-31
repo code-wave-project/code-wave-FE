@@ -7,13 +7,14 @@ import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
 
 const OuterContainer = styled.div`
-	width: 100%;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: ${({ theme }) => theme.COLOR.GRAY100};
-`;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.COLOR.GRAY100};
+`
 
 const SignupBox = styled.div`
 	width: 400px;
@@ -157,11 +158,11 @@ const Signup = () => {
 
 	return (
 		<OuterContainer>
+			<TitleContainer>
+				<Logo src={logoHeader} />
+				<Title>회원가입</Title>
+			</TitleContainer>
 			<SignupBox>
-				<TitleContainer>
-					<Logo src={logoHeader} />
-					<Title>회원가입</Title>
-				</TitleContainer>
 				{step === 1 && (
 					<>
 						<CheckboxLabel>
