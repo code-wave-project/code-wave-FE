@@ -95,11 +95,11 @@ const InputContainer = styled.div`
 	width: 100%;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ state: boolean }>`
 	width: 100%;
 	padding: 0.5rem;
 	margin-bottom: 1.5rem;
-	border-bottom: 1px solid ${({ theme }) => theme.COLOR.GRAY300};
+	border-bottom: 1px solid ${({ state, theme }) => (state ? theme.COLOR.PINK500 : theme.COLOR.GRAY300)};
 	font-size: 1rem;
 `;
 
@@ -219,6 +219,7 @@ const Signup = () => {
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+	const [error, setError] = useState(false);
 	const navigate = useNavigate();
 
 	const [firstButtonClick, setFirstButtonClick] = useState(false);
@@ -250,7 +251,12 @@ const Signup = () => {
 	const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/; // 대소문자 상관없는 영어, 숫자, 특수문자 하나 이상 포함
 
 	const isStepSecondValid = !!(form.name && form.id && form.email && emailRegex.test(form.email));
-	const isStepThirdValid = !!(password && confirmPassword && password === confirmPassword && passwordRegex.test(password));
+	const isStepThirdValid = !!(
+		password &&
+		confirmPassword &&
+		password === confirmPassword &&
+		passwordRegex.test(password)
+	);
 
 	return (
 		<OuterContainer>
@@ -332,6 +338,7 @@ const Signup = () => {
 							<InputContainer>
 								<TermsTitle>이름</TermsTitle>
 								<Input
+									state={error}
 									type="text"
 									name="name"
 									value={form.name}
@@ -339,9 +346,17 @@ const Signup = () => {
 									placeholder="이름"
 								/>
 								<TermsTitle>아이디</TermsTitle>
-								<Input type="text" name="id" value={form.id} onChange={handleInformationChange} placeholder="아이디" />
+								<Input
+									state={error}
+									type="text"
+									name="id"
+									value={form.id}
+									onChange={handleInformationChange}
+									placeholder="아이디"
+								/>
 								<TermsTitle>이메일</TermsTitle>
 								<Input
+									state={error}
 									type="email"
 									name="email"
 									value={form.email}
@@ -359,9 +374,11 @@ const Signup = () => {
 									onClick={() => {
 										if (!isStepSecondValid) {
 											setSecondButtonClick(true);
+											setError(true);
 										} else {
 											setStep(3);
 											setSecondButtonClick(false);
+											setError(false);
 										}
 									}}>
 									다음
@@ -374,6 +391,7 @@ const Signup = () => {
 							<InputContainer>
 								<TermsTitle>비밀번호</TermsTitle>
 								<Input
+									state={error}
 									type={passwordVisible ? 'text' : 'password'}
 									value={password}
 									onChange={e => {
@@ -390,6 +408,7 @@ const Signup = () => {
 							<InputContainer>
 								<TermsTitle>비밀번호 확인</TermsTitle>
 								<Input
+									state={error}
 									type={confirmPasswordVisible ? 'text' : 'password'}
 									value={confirmPassword}
 									onChange={handleConfirmPasswordChange}
@@ -409,10 +428,12 @@ const Signup = () => {
 									onClick={() => {
 										if (!isStepThirdValid) {
 											setThirdButtonClick(true);
+											setError(true);
 										} else {
 											setStep(4);
 											setThirdButtonClick(false);
 											form.password = password;
+											setError(false);
 										}
 									}}>
 									회원가입
