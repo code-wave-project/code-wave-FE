@@ -18,6 +18,14 @@ const OuterContainer = styled.div`
 	background-color: ${({ theme }) => theme.COLOR.GRAY100};
 `;
 
+const TermsTitle = styled.div`
+	font-size: 1rem;
+	font-weight: bold;
+	color: ${({ theme }) => theme.COLOR.GRAY700};
+	margin-bottom: 0.5rem;
+	text-align: left;
+`;
+
 const RecoveryBox = styled.div`
 	width: 400px;
 	padding: 2rem;
@@ -129,11 +137,13 @@ const FindAccount = () => {
 								<br />
 								하단의 내용을 입력하여 아이디를 찾아보세요.
 							</Discription>
+							<TermsTitle>이름</TermsTitle>
 							<Input
 								placeholder="가입 시 사용한 이름을 입력하세요."
 								value={idInfo.name}
 								onChange={e => setIdInfo({ ...idInfo, name: e.target.value })}
 							/>
+							<TermsTitle>이메일</TermsTitle>
 							<Input
 								placeholder="가입 시 사용한 이메일을 입력하세요."
 								value={idInfo.email}
@@ -152,11 +162,13 @@ const FindAccount = () => {
 								<br />
 								하단의 내용을 입력하여 비밀번호를 찾아보세요.
 							</Discription>
+							<TermsTitle>아이디</TermsTitle>
 							<Input
 								placeholder="가입 시 사용한 아이디를 입력하세요."
 								value={pwInfo.id}
 								onChange={e => setPwInfo({ ...pwInfo, id: e.target.value })}
 							/>
+							<TermsTitle>이메일</TermsTitle>
 							<Input
 								placeholder="가입 시 사용한 이메일을 입력하세요."
 								value={pwInfo.email}
