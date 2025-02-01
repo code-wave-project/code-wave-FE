@@ -247,9 +247,10 @@ const Signup = () => {
 	};
 
 	const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+	const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/; // 대소문자 상관없는 영어, 숫자, 특수문자 하나 이상 포함
 
 	const isStepSecondValid = !!(form.name && form.id && form.email && emailRegex.test(form.email));
-	const isStepThirdValid = !!(password && confirmPassword && password === confirmPassword);
+	const isStepThirdValid = !!(password && confirmPassword && password === confirmPassword && passwordRegex.test(password));
 
 	return (
 		<OuterContainer>
