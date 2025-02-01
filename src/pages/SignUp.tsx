@@ -1,5 +1,3 @@
-// import * as S from '@/styles/pages/SignUp.style';
-
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import logoHeader from '../assets/logos/logo_header.png';
@@ -12,10 +10,48 @@ const OuterContainer = styled.div`
 	width: 100%;
 	height: 100vh;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	background-color: ${({ theme }) => theme.COLOR.GRAY100};
+`;
+
+const InnerContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`;
+
+const Indicator = styled.div<{ isActive: number }>`
+	display: flex;
+	margin-right: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 1rem 0 0 1rem;
+	visibility: ${({ isActive }) => (isActive === 4 ? 'hidden' : 'visible')};
+`;
+
+const IndicatorTitle = styled.span<{ isActive: boolean }>`
+	color: ${({ isActive, theme }) => (isActive ? theme.COLOR.BLUE500 : 'transparent')};
+	font-size: 16px;
+`;
+
+const IndicatorStep = styled.div<{ isActive: boolean }>`
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: ${({ isActive, theme }) => (isActive ? theme.COLOR.BLUE500 : theme.COLOR.GRAY300)};
+	transition: background-color 0.3s ease-in-out;
+	display: inline-block;
+`;
+
+const StepContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 1rem;
+	font-size: 1rem;
 `;
 
 const SignupBox = styled.div`
@@ -196,124 +232,141 @@ const Signup = () => {
 
 	return (
 		<OuterContainer>
-			<TitleContainer>
-				<Logo src={logoHeader} />
-				<Title>회원가입</Title>
-			</TitleContainer>
-			<SignupBox>
-				{step === 1 && (
-					<>
-						<CheckboxLabel>
-							<CheckboxInput type="checkbox" checked={termsAccepted} onChange={handleToggleTerms} />
-							약관 전체 동의
-							<MoreButton>
-								<img src={moreButton} />
-							</MoreButton>
-						</CheckboxLabel>
+			<Indicator isActive={step}>
+				<StepContainer>
+					<IndicatorTitle isActive={step === 1}>약관 동의</IndicatorTitle>
+					<IndicatorStep isActive={step === 1} />
+				</StepContainer>
+				<StepContainer>
+					<IndicatorTitle isActive={step === 2}>회원 정보</IndicatorTitle>
+					<IndicatorStep isActive={step === 2} />
+				</StepContainer>
+				<StepContainer>
+					<IndicatorTitle isActive={step === 3}>비밀 번호</IndicatorTitle>
+					<IndicatorStep isActive={step === 3} />
+				</StepContainer>
+			</Indicator>
 
-						<CustomHr />
+			<InnerContainer>
+				<TitleContainer>
+					<Logo src={logoHeader} />
+					<Title>회원가입</Title>
+				</TitleContainer>
+				<SignupBox>
+					{step === 1 && (
+						<>
+							<CheckboxLabel>
+								<CheckboxInput type="checkbox" checked={termsAccepted} onChange={handleToggleTerms} />
+								약관 전체 동의
+								<MoreButton>
+									<img src={moreButton} />
+								</MoreButton>
+							</CheckboxLabel>
 
-						<CheckboxLabel>
-							<CheckboxInput type="checkbox" checked={serviceTerms} onChange={() => setServiceTerms(!serviceTerms)} />
-							<TextHighLight>필수</TextHighLight>코드웨이브 이용약관 동의
-							<MoreButton>
-								<img src={moreButton} />
-							</MoreButton>
-						</CheckboxLabel>
+							<CustomHr />
 
-						<CheckboxLabel>
-							<CheckboxInput
-								type="checkbox"
-								checked={privacyPolicy}
-								onChange={() => setPrivacyPolicy(!privacyPolicy)}
-							/>
-							<TextHighLight>필수</TextHighLight>개인정보 수집 및 이용 동의
-							<MoreButton>
-								<img src={moreButton} />
-							</MoreButton>
-						</CheckboxLabel>
+							<CheckboxLabel>
+								<CheckboxInput type="checkbox" checked={serviceTerms} onChange={() => setServiceTerms(!serviceTerms)} />
+								<TextHighLight>필수</TextHighLight>코드웨이브 이용약관 동의
+								<MoreButton>
+									<img src={moreButton} />
+								</MoreButton>
+							</CheckboxLabel>
 
-						<ButtonContainer>
-							<PreviousButton onClick={() => navigate('/login')}>취소</PreviousButton>
-							<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
-								다음
-							</Button>
-						</ButtonContainer>
-					</>
-				)}
-				{step === 2 && (
-					<>
-						<Input type="text" name="name" placeholder="이름" value={form.name} onChange={handleInformationChange} />
-						<Input type="text" name="id" placeholder="아이디" value={form.id} onChange={handleInformationChange} />
-						<Input
-							type="email"
-							name="email"
-							placeholder="이메일"
-							value={form.email}
-							onChange={handleInformationChange}
-						/>
-						<ButtonContainer>
-							<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
-							<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
-								다음
-							</Button>
-						</ButtonContainer>
-					</>
-				)}
-				{step === 3 && (
-					<>
-						<InputContainer>
+							<CheckboxLabel>
+								<CheckboxInput
+									type="checkbox"
+									checked={privacyPolicy}
+									onChange={() => setPrivacyPolicy(!privacyPolicy)}
+								/>
+								<TextHighLight>필수</TextHighLight>개인정보 수집 및 이용 동의
+								<MoreButton>
+									<img src={moreButton} />
+								</MoreButton>
+							</CheckboxLabel>
+
+							<ButtonContainer>
+								<PreviousButton onClick={() => navigate('/login')}>취소</PreviousButton>
+								<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
+									다음
+								</Button>
+							</ButtonContainer>
+						</>
+					)}
+					{step === 2 && (
+						<>
+							<Input type="text" name="name" placeholder="이름" value={form.name} onChange={handleInformationChange} />
+							<Input type="text" name="id" placeholder="아이디" value={form.id} onChange={handleInformationChange} />
 							<Input
-								type={passwordVisible ? 'text' : 'password'}
-								name="password"
-								placeholder="비밀번호"
-								value={password}
-								onChange={e => {
-									setPassword(e.target.value);
-									handleInformationChange(e);
-								}}
+								type="email"
+								name="email"
+								placeholder="이메일"
+								value={form.email}
+								onChange={handleInformationChange}
 							/>
-							<PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
-								<img src={passwordVisible ? passwordShow : passwordHide} />
-							</PasswordShowButton>
-						</InputContainer>
-						<InputContainer>
-							<Input
-								type={confirmPasswordVisible ? 'text' : 'password'}
-								placeholder="비밀번호 확인"
-								value={confirmPassword}
-								onChange={handleConfirmPasswordChange}
-							/>
-							<PasswordShowButton onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
-								<img src={confirmPasswordVisible ? passwordShow : passwordHide} alt="비밀번호 보기" />
-							</PasswordShowButton>
-						</InputContainer>
-						<ButtonContainer>
-							<PreviousButton onClick={() => setStep(2)}>이전</PreviousButton>
-							<Button disabled={!isStepThirdValid} onClick={() => setStep(4)}>
-								회원 가입
-							</Button>
-						</ButtonContainer>
-					</>
-				)}
-				{step === 4 && (
-					<>
-						<p style={{ marginBottom: '1rem' }}>
-							회원가입이 완료되었습니다.
-							<br />
-							로그인 화면으로 이동하여 로그인하세요.
-						</p>
+							<ButtonContainer>
+								<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
+								<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
+									다음
+								</Button>
+							</ButtonContainer>
+						</>
+					)}
+					{step === 3 && (
+						<>
+							<InputContainer>
+								<Input
+									type={passwordVisible ? 'text' : 'password'}
+									name="password"
+									placeholder="비밀번호"
+									value={password}
+									onChange={e => {
+										setPassword(e.target.value);
+										handleInformationChange(e);
+									}}
+								/>
+								<PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
+									<img src={passwordVisible ? passwordShow : passwordHide} />
+								</PasswordShowButton>
+							</InputContainer>
+							<InputContainer>
+								<Input
+									type={confirmPasswordVisible ? 'text' : 'password'}
+									placeholder="비밀번호 확인"
+									value={confirmPassword}
+									onChange={handleConfirmPasswordChange}
+								/>
+								<PasswordShowButton onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+									<img src={confirmPasswordVisible ? passwordShow : passwordHide} alt="비밀번호 보기" />
+								</PasswordShowButton>
+							</InputContainer>
+							<ButtonContainer>
+								<PreviousButton onClick={() => setStep(2)}>이전</PreviousButton>
+								<Button disabled={!isStepThirdValid} onClick={() => setStep(4)}>
+									회원 가입
+								</Button>
+							</ButtonContainer>
+						</>
+					)}
+					{step === 4 && (
+						<>
+							<p style={{ marginBottom: '1rem' }}>
+								회원가입이 완료되었습니다.
+								<br />
+								로그인 화면으로 이동하여 로그인하세요.
+							</p>
 
-						<PreviousButton
-							onClick={() => {
-								alert(`이메일: ${form.email}\n아이디: ${form.id}\n이름: ${form.name}\n비밀번호: ${form.password}`);
-								navigate('/login');
-							}}>
-							로그인으로 이동
-						</PreviousButton>
-					</>
-				)}
-			</SignupBox>
+							<PreviousButton
+								onClick={() => {
+									alert(`이메일: ${form.email}\n아이디: ${form.id}\n이름: ${form.name}\n비밀번호: ${form.password}`);
+									navigate('/login');
+								}}>
+								로그인으로 이동
+							</PreviousButton>
+						</>
+					)}
+				</SignupBox>
+			</InnerContainer>
 		</OuterContainer>
 	);
 };
