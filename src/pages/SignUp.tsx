@@ -6,6 +6,7 @@ import logoHeader from '../assets/logos/logo_header.png';
 import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
 import moreButton from '../assets/icons/more.svg';
+import { useNavigate } from 'react-router-dom';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -68,6 +69,25 @@ const PasswordShowButton = styled.button`
 	cursor: pointer;
 `;
 
+const ButtonContainer = styled.div`
+	display: flex;
+	gap: 1rem;
+	margin-top: 1rem;
+`;
+
+const PreviousButton = styled.button`
+	width: 100%;
+	height: 48px;
+	background-color: ${({ theme }) => theme.COLOR.WHITE};
+	color: ${({ theme }) => theme.COLOR.BLUE500};
+	font-size: 1rem;
+	font-weight: bold;
+	border: 1px solid ${({ theme }) => theme.COLOR.BLUE500};
+	border-radius: 0.5rem;
+	border-radius: 10px;
+	cursor: pointer};
+`;
+
 const Button = styled.button`
 	width: 100%;
 	height: 48px;
@@ -75,7 +95,6 @@ const Button = styled.button`
 	color: ${({ disabled, theme }) => (disabled ? theme.COLOR.BLUE500 : theme.COLOR.WHITE)};
 	font-size: 1rem;
 	font-weight: bold;
-	margin-top: 1rem;
 	border: 1px solid ${({ theme }) => theme.COLOR.BLUE500};
 	border-radius: 0.5rem;
 	border-radius: 10px;
@@ -130,7 +149,7 @@ const MoreButton = styled.button`
 const TextHighLight = styled.p`
 	margin-right: 5px;
 	color: ${({ theme }) => theme.COLOR.BLUE500};
-`
+`;
 
 const CustomHr = styled.hr`
 	width: 50%;
@@ -149,6 +168,7 @@ const Signup = () => {
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const allChecked = serviceTerms && privacyPolicy;
@@ -190,7 +210,7 @@ const Signup = () => {
 								<img src={moreButton} />
 							</MoreButton>
 						</CheckboxLabel>
-						
+
 						<CustomHr />
 
 						<CheckboxLabel>
@@ -212,9 +232,13 @@ const Signup = () => {
 								<img src={moreButton} />
 							</MoreButton>
 						</CheckboxLabel>
-						<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
-							다음
-						</Button>
+
+						<ButtonContainer>
+							<PreviousButton onClick={() => navigate('/login')}>취소</PreviousButton>
+							<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
+								다음
+							</Button>
+						</ButtonContainer>
 					</>
 				)}
 				{step === 2 && (
@@ -228,9 +252,12 @@ const Signup = () => {
 							value={form.email}
 							onChange={handleInformationChange}
 						/>
-						<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
-							다음
-						</Button>
+						<ButtonContainer>
+							<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
+							<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
+								다음
+							</Button>
+						</ButtonContainer>
 					</>
 				)}
 				{step === 3 && (
@@ -261,13 +288,29 @@ const Signup = () => {
 								<img src={confirmPasswordVisible ? passwordShow : passwordHide} alt="비밀번호 보기" />
 							</PasswordShowButton>
 						</InputContainer>
-						<Button
-							disabled={!isStepThirdValid}
-							onClick={() =>
-								alert(`이메일: ${form.email}\n아이디: ${form.id}\n이름: ${form.name}\n비밀번호: ${form.password}`)
-							}>
-							회원 가입
-						</Button>
+						<ButtonContainer>
+							<PreviousButton onClick={() => setStep(2)}>이전</PreviousButton>
+							<Button disabled={!isStepThirdValid} onClick={() => setStep(4)}>
+								회원 가입
+							</Button>
+						</ButtonContainer>
+					</>
+				)}
+				{step === 4 && (
+					<>
+						<p style={{ marginBottom: '1rem' }}>
+							회원가입이 완료되었습니다.
+							<br />
+							로그인 화면으로 이동하여 로그인하세요.
+						</p>
+
+						<PreviousButton
+							onClick={() => {
+								alert(`이메일: ${form.email}\n아이디: ${form.id}\n이름: ${form.name}\n비밀번호: ${form.password}`);
+								navigate('/login');
+							}}>
+							로그인으로 이동
+						</PreviousButton>
 					</>
 				)}
 			</SignupBox>
