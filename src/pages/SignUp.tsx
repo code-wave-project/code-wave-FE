@@ -246,7 +246,9 @@ const Signup = () => {
 		setConfirmPassword(e.target.value);
 	};
 
-	const isStepSecondValid = !!(form.name && form.id && form.email);
+	const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+	const isStepSecondValid = !!(form.name && form.id && form.email && emailRegex.test(form.email));
 	const isStepThirdValid = !!(password && confirmPassword && password === confirmPassword);
 
 	return (
@@ -425,7 +427,10 @@ const Signup = () => {
 								로그인 화면으로 이동하여 로그인하세요.
 							</p>
 
-							<PreviousButton onClick={() => {navigate('/login');}}>
+							<PreviousButton
+								onClick={() => {
+									navigate('/login');
+								}}>
 								로그인으로 이동
 							</PreviousButton>
 						</>
