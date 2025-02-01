@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 export const ModalWrap = styled.div`
 	border-radius: 16px;
 	padding: 32px;
 	z-index: 2;
-	background-color: ${COLOR.WHITE};
+	background-color: ${theme.COLOR.WHITE};
 `;
 
 export const ModalSpace = styled.div`
@@ -24,7 +24,7 @@ export const ModalBackground = styled.div`
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(127, 130, 149, 0.3);
+	background-color: ${theme.COLOR.FILTER};
 	top: 0;
 	left: 0;
 	z-index: 1;
@@ -46,7 +46,7 @@ export const TextGroup = styled.div`
 `;
 
 export const Title = styled.div`
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-size: 16px;
 	font-weight: 500;
 `;
@@ -67,12 +67,12 @@ export const DescriptionGroup = styled.div`
 
 export const Label = styled.div`
 	width: 49px;
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-weight: 500;
 `;
 
 export const Text = styled.div`
-	color: ${COLOR.GRAY600};
+	color: ${theme.COLOR.GRAY600};
 	font-weight: 400;
 	text-transform: uppercase;
 `;

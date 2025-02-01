@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 export const ProjectCard = styled.div`
 	display: flex;
@@ -9,13 +9,13 @@ export const ProjectCard = styled.div`
 	height: 204px;
 	padding: 24px 32px 16px;
 	border-radius: 16px;
-	background-color: ${COLOR.WHITE};
+	background-color: ${theme.COLOR.WHITE};
 	line-height: normal;
 	cursor: pointer;
 `;
 
 export const Title = styled.div`
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-size: 16px;
 	font-weight: 500;
 
@@ -26,7 +26,7 @@ export const Title = styled.div`
 `;
 
 export const Text = styled.div`
-	color: ${COLOR.GRAY600};
+	color: ${theme.COLOR.GRAY600};
 	font-size: 14px;
 	font-weight: 400;
 
@@ -44,13 +44,13 @@ export const Group = styled.div`
 
 export const GroupTitle = styled.div`
 	width: 46px;
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-size: 12px;
 	font-weight: 400;
 `;
 
 export const GroupText = styled.div`
-	color: ${COLOR.GRAY600};
+	color: ${theme.COLOR.GRAY600};
 	font-size: 12px;
 	font-weight: 400;
 
@@ -73,7 +73,7 @@ export const HideGroup = styled.div`
 `;
 
 export const Copy = styled.div`
-	color: ${COLOR.BLUE500};
+	color: ${theme.COLOR.BLUE500};
 	font-size: 12px;
 	font-weight: 500;
 	text-decoration-line: underline;

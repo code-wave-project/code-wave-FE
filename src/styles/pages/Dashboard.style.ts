@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 export const Dashboard = styled.div`
 	display: flex;
@@ -10,7 +10,7 @@ export const Dashboard = styled.div`
 
 export const Space = styled.div`
 	width: calc(100vw - 240px);
-	background-color: ${COLOR.GRAY100};
+	background-color: ${theme.COLOR.GRAY100};
 `;
 
 export const TopSpace = styled.div`
@@ -21,7 +21,7 @@ export const TopSpace = styled.div`
 `;
 
 export const Title = styled.div`
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-size: 32px;
 	font-weight: 700;
 	line-height: normal;
@@ -34,7 +34,7 @@ export const ButtonSpace = styled.div`
 `;
 
 export const Button = styled.div`
-	color: ${COLOR.BLUE500};
+	color: ${theme.COLOR.BLUE500};
 	font-feature-settings:
 		'liga' off,
 		'clig' off;
@@ -63,7 +63,7 @@ export const NonProject = styled.div`
 	width: 100%;
 	height: 100%;
 
-	color: ${COLOR.GRAY500};
+	color: ${theme.COLOR.GRAY500};
 	font-feature-settings:
 		'liga' off,
 		'clig' off;

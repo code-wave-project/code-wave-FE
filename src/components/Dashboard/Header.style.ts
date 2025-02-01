@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 interface VisibleProps {
 	$isVisible: boolean;
@@ -14,7 +14,7 @@ export const Header = styled.div`
 	height: 72px;
 	display: flex;
 	align-items: center;
-	background-color: ${COLOR.GRAY100};
+	background-color: ${theme.COLOR.GRAY100};
 	padding: 0 48px;
 `;
 
@@ -44,8 +44,8 @@ export const DropdownContainer = styled.div<VisibleProps>`
 	padding: 16px;
 	display: ${props => (props.$isVisible ? 'flex' : 'none')};
 	flex-direction: column;
-	background-color: ${COLOR.WHITE};
-	border: 1px solid ${COLOR.BLUE500};
+	background-color: ${theme.COLOR.WHITE};
+	border: 1px solid ${theme.COLOR.BLUE500};
 	border-radius: 10px;
 `;
 
@@ -57,7 +57,7 @@ export const DropdownItem = styled.div<LogOutProps>`
 	align-items: center;
 	gap: 4px;
 
-	color: ${props => (props.$isLogOut ? COLOR.PINK500 : COLOR.GRAY600)};
+	color: ${props => (props.$isLogOut ? theme.COLOR.PINK500 : theme.COLOR.GRAY600)};
 	font-feature-settings:
 		'liga' off,
 		'clig' off;

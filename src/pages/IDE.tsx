@@ -1,89 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import Editor from '../components/Editor';
-import FileExplorer from '../components/FileExplorer';
-import { useFileStore } from '../store/fileStore';
-import { useCollaboratorStore } from '../store/collaboratorStore';
-import PathBar from '../components/PathBar';
-import SideBar from '../components/SideBar';
-import AppBar from '../components/AppBar';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { Sidebar } from '@/components/IDE/SideBar/SideBar';
+import { Panel } from '@components/IDE/SideBar/Panels/Panel';
+import { Editor } from '@/components/IDE/Editor/Editor';
 
-const IDE: React.FC = () => {
-	const { files, addFile, deleteFile, updateFileContent } = useFileStore();
+export type PanelType = 'files' | 'chat' | 'CodeStyle' | null;
 
-	const { collaborators, addCollaborator, removeCollaborator } = useCollaboratorStore();
+const OuterContainer = styled.div`
+	width: 100%;
+	height: 100vh;
+	overflow-x: auto;
+	overflow-y: scroll;
+`;
 
-	const [activeFile, setActiveFile] = useState<string | null>(null);
-	const [openFiles, setOpenFiles] = useState<string[]>([]);
-	const [activeTab, setActiveTab] = useState('files');
-	const [isDarkMode, setIsDarkMode] = useState(() => {
-		const savedTheme = localStorage.getItem('theme');
-		return savedTheme === 'dark';
-	});
+const Container = styled.div<{ hasPanel: boolean }>`
+	display: flex;
+	height: 100%;
+	min-height: 45rem;
+	min-width: ${({ hasPanel }) => (hasPanel ? '1324px' : '1024px')};
+`;
 
-	const renderSideContent = () => {
-		switch (activeTab) {
-			case 'files':
-				return (
-					<>
-						<FileExplorer
-							files={files}
-							onFileSelect={handleFileSelect}
-							onFileCreate={addFile}
-							onFileDelete={deleteFile}
-						/>
-					</>
-				);
-			case 'chat':
-				return <div className="chat-panel">채팅 패널</div>;
-			case 'settings':
-				return <div className="settings-panel">설정 패널</div>;
-			default:
-				return null;
-		}
-	};
+const SidebarContainer = styled.div`
+	display: flex;
+	flex-shrink: 0;
+`;
 
-	const handleThemeToggle = () => {
-		setIsDarkMode(prev => !prev);
-	};
+const MainContent = styled.div<{ hasPanel: boolean }>`
+	height: 100%;
+	flex: 1;
+	min-width: ${({ hasPanel }) => (hasPanel ? '724px' : '600px')};
+	transition: min-width 0.2s ease;
+`;
 
-	const handleFileClose = (filePath: string) => {
-		setOpenFiles(prev => prev.filter(file => file !== filePath));
-		if (activeFile === filePath) {
-			setActiveFile(null);
-		}
-	};
+export interface IDEProps {
+	initialPanel?: PanelType;
+}
 
-	const handleFileSelect = (filePath: string) => {
-		setActiveFile(filePath);
-		if (!openFiles.includes(filePath)) {
-			setOpenFiles(prev => [...prev, filePath]);
-		}
+const IDE: React.FC<IDEProps> = ({ initialPanel = null }) => {
+	const [openPanel, setOpenPanel] = useState<PanelType>(initialPanel);
+
+	const handlePanelToggle = (panel: 'files' | 'chat' | 'CodeStyle' | null) => {
+		const newPanel = openPanel === panel ? null : panel;
+		setOpenPanel(newPanel);
 	};
 
 	return (
-		<div className="ide-container">
-			<SideBar activeTab={activeTab} onTabChange={setActiveTab} />
-			<div className="sidebar">{renderSideContent()}</div>
-
-			<div className="main-content">
-				<AppBar currentPage="Current Page" />
-				<PathBar
-					openFiles={openFiles}
-					activeFile={activeFile || undefined}
-					onClose={handleFileClose}
-					onSelect={setActiveFile}
-				/>
-				<Editor
-					file={activeFile}
-					collaborators={collaborators}
-					onContentChange={content => {
-						if (activeFile) {
-							updateFileContent(activeFile, content);
-						}
-					}}
-				/>
-			</div>
-		</div>
+		<OuterContainer>
+			<Container hasPanel={Boolean(openPanel)}>
+				<SidebarContainer>
+					<Sidebar openPanel={openPanel} onPanelToggle={handlePanelToggle} />
+					<Panel openPanel={openPanel} />
+				</SidebarContainer>
+				<MainContent hasPanel={Boolean(openPanel)}>
+					<Editor />
+				</MainContent>
+			</Container>
+		</OuterContainer>
 	);
 };
 

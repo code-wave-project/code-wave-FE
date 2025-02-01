@@ -1,5 +1,5 @@
 import * as S from '@components/Dashboard/DashMenu.style';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 interface MenuProps {
 	icon: React.ElementType;
@@ -14,7 +14,7 @@ function DashMenu({ icon: Icon, title, selected, onClick }: MenuProps) {
 			<S.DashMenu onClick={onClick}>
 				<S.SelectBar $isSelected={selected} />
 				<S.MenuGroup $isSelected={selected}>
-					<Icon width={36} height={36} fill={selected ? COLOR.BLUE500 : COLOR.GRAY600} />
+					<Icon width={36} height={36} fill={selected ? theme.COLOR.BLUE500 : theme.COLOR.GRAY600} />
 					{title}
 				</S.MenuGroup>
 			</S.DashMenu>

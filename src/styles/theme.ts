@@ -11,20 +11,29 @@ const COLOR = {
 	BLUE500: '#509CF7',
 	BLUE400: '#79B4F9',
 	BLUE300: '#AED1FB',
+	BLUE200: '#CEE7F7',
 	PINK600: '#FD5B73',
 	PINK500: '#FF8093',
 	FILTER: 'rgba(127, 130, 149, 0.30)',
 	TOAST: 'rgba(0, 0, 0, 0.80)',
-};
+} as const;
 
-const FONT = {};
+const FONT = {
+	// 필요한 폰트 스타일 추가
+} as const;
 
-const theme = {
+export const theme = {
 	COLOR,
 	FONT,
-};
+} as const;
 
 export default theme;
 
-export type ColorType = typeof theme.COLOR;
-export type FontType = typeof theme.FONT;
+// styled-components의 DefaultTheme 정의
+import 'styled-components';
+declare module 'styled-components' {
+	export interface DefaultTheme {
+		COLOR: typeof COLOR;
+		FONT: typeof FONT;
+	}
+}

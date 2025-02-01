@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 interface InputTextProps {
 	$isInvalid: boolean;
@@ -17,13 +17,13 @@ export const LabelSpace = styled.div`
 `;
 
 export const Label = styled.div`
-	color: ${COLOR.GRAY700};
+	color: ${theme.COLOR.GRAY700};
 	font-size: 14px;
 	font-weight: 500;
 `;
 
 export const Essential = styled.div`
-	color: ${COLOR.BLUE500};
+	color: ${theme.COLOR.BLUE500};
 	font-size: 16px;
 	font-weight: 400;
 `;
@@ -36,18 +36,20 @@ export const InputText = styled.input<InputTextProps>`
 	font-family: 'Pretendard';
 	font-size: 14px;
 	font-weight: 400;
-	color: ${COLOR.GRAY700};
-	border-bottom: ${props => (props.$isInvalid ? `1px solid ${COLOR.PINK500}` : `1px solid ${COLOR.GRAY300}`)};
+	color: ${theme.COLOR.GRAY700};
+	border-bottom: ${props =>
+		props.$isInvalid ? `1px solid ${theme.COLOR.PINK500}` : `1px solid ${theme.COLOR.GRAY300}`};
 	outline: none;
-	background: ${COLOR.WHITE};
+	background: ${theme.COLOR.WHITE};
 
 	&:focus {
-		border-bottom: ${props => (props.$isInvalid ? `1px solid ${COLOR.PINK500}` : `1px solid ${COLOR.GRAY300}`)};
+		border-bottom: ${props =>
+			props.$isInvalid ? `1px solid ${theme.COLOR.PINK500}` : `1px solid ${theme.COLOR.GRAY300}`};
 	}
 `;
 
 export const Warn = styled.div`
-	color: ${COLOR.PINK500};
+	color: ${theme.COLOR.PINK500};
 	font-size: 10px;
 	font-weight: 400;
 `;

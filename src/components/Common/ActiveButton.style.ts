@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
-
+import { theme } from '@styles/theme';
 interface ButtonProps {
 	$isActive: boolean;
 	$isLarge: boolean;
@@ -13,12 +12,12 @@ export const ButtonContainer = styled.div<ButtonProps>`
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px;
-	border: ${props => (props.$isActive ? `1px solid ${COLOR.WHITE}` : `1px solid ${COLOR.BLUE500}`)};
-	background: ${props => (props.$isActive ? COLOR.BLUE500 : COLOR.WHITE)};
+	border: ${props => (props.$isActive ? `1px solid ${theme.COLOR.WHITE}` : `1px solid ${theme.COLOR.BLUE500}`)};
+	background: ${props => (props.$isActive ? theme.COLOR.BLUE500 : theme.COLOR.WHITE)};
 	cursor: pointer;
 	pointer-events: ${props => (props.$isActive ? 'auto' : 'none')};
 
-	color: ${props => (props.$isActive ? COLOR.WHITE : COLOR.BLUE500)};
+	color: ${props => (props.$isActive ? theme.COLOR.WHITE : theme.COLOR.BLUE500)};
 	font-size: 16px;
 	font-weight: 500;
 `;

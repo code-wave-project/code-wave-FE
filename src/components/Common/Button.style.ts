@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 interface ButtonProps {
 	$isLarge: boolean;
@@ -12,11 +12,11 @@ export const ButtonContainer = styled.div<ButtonProps>`
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px;
-	border: 1px solid ${COLOR.BLUE500};
-	background: ${COLOR.WHITE};
+	border: 1px solid ${theme.COLOR.BLUE500};
+	background: ${theme.COLOR.WHITE};
 	cursor: pointer;
 
-	color: ${COLOR.BLUE500};
+	color: ${theme.COLOR.BLUE500};
 	font-size: 16px;
 	font-weight: 500;
 `;

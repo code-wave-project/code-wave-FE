@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR } from '@/const/color';
+import { theme } from '@styles/theme';
 
 export const DashSideBar = styled.div`
 	display: flex;
@@ -8,8 +8,8 @@ export const DashSideBar = styled.div`
 	padding: 32px 20px;
 	width: 240px;
 	height: 100dvh;
-	background-color: ${COLOR.WHITE};
-	border-right: 3px solid ${COLOR.GRAY100};
+	background-color: ${theme.COLOR.WHITE};
+	border-right: 3px solid ${theme.COLOR.GRAY100};
 `;
 
 export const Logo = styled.img`
@@ -26,7 +26,7 @@ export const Line = styled.div`
 	margin-top: 16px;
 	width: 100%;
 	height: 2px;
-	background-color: ${COLOR.GRAY200};
+	background-color: ${theme.COLOR.GRAY200};
 `;
 
 export const SelectSpace = styled.div`
