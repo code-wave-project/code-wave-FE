@@ -132,17 +132,16 @@ const PreviousButton = styled.button`
 	cursor: pointer};
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ state: boolean }>`
 	width: 100%;
 	height: 48px;
-	background-color: ${({ disabled, theme }) => (disabled ? theme.COLOR.WHITE : theme.COLOR.BLUE500)};
-	color: ${({ disabled, theme }) => (disabled ? theme.COLOR.BLUE500 : theme.COLOR.WHITE)};
+	background-color: ${({ state, theme }) => (state ? theme.COLOR.BLUE500 : theme.COLOR.WHITE)};
+	color: ${({ state, theme }) => (state ? theme.COLOR.WHITE : theme.COLOR.BLUE500)};
 	font-size: 1rem;
 	font-weight: bold;
 	border: 1px solid ${({ theme }) => theme.COLOR.BLUE500};
 	border-radius: 0.5rem;
 	border-radius: 10px;
-	cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const CheckboxLabel = styled.label`
@@ -201,22 +200,34 @@ const CustomHr = styled.hr`
 	margin-bottom: 1rem;
 `;
 
+const ErrorMessage = styled.div`
+	color: ${({ theme }) => theme.COLOR.PINK500};
+	font-size: 0.7rem;
+	text-align: left;
+	margin-top: -0.5rem;
+	margin-bottom: 1rem;
+`;
+
 const Signup = () => {
 	const [step, setStep] = useState(1);
 	const [form, setForm] = useState({ name: '', id: '', email: '', password: '' });
 	const [termsAccepted, setTermsAccepted] = useState(false);
 	const [serviceTerms, setServiceTerms] = useState(false);
 	const [privacyPolicy, setPrivacyPolicy] = useState(false);
-	const [isStepOneValid, setIsStepOneValid] = useState(false);
+	const [isStepFirstValid, setIsFirstValid] = useState(false);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 
+	const [firstButtonClick, setFirstButtonClick] = useState(false);
+	const [secondButtonClick, setSecondButtonClick] = useState(false);
+	const [thirdButtonClick, setThirdButtonClick] = useState(false);
+
 	useEffect(() => {
 		const allChecked = serviceTerms && privacyPolicy;
-		setIsStepOneValid(allChecked);
+		setIsFirstValid(allChecked);
 		setTermsAccepted(allChecked);
 	}, [serviceTerms, privacyPolicy]);
 
@@ -235,8 +246,8 @@ const Signup = () => {
 		setConfirmPassword(e.target.value);
 	};
 
-	const isStepSecondValid = form.name && form.id && form.email;
-	const isStepThirdValid = password && confirmPassword && password === confirmPassword;
+	const isStepSecondValid = !!(form.name && form.id && form.email);
+	const isStepThirdValid = !!(password && confirmPassword && password === confirmPassword);
 
 	return (
 		<OuterContainer>
@@ -288,15 +299,26 @@ const Signup = () => {
 									checked={privacyPolicy}
 									onChange={() => setPrivacyPolicy(!privacyPolicy)}
 								/>
-								<TextHighLight>필수</TextHighLight>개인정보 수집 및 이용 동의
+								<TextHighLight>필수</TextHighLight>개인정보처리방침 동의
 								<MoreButton>
 									<img src={moreButton} />
 								</MoreButton>
 							</CheckboxLabel>
 
+							{firstButtonClick && !isStepFirstValid && <ErrorMessage>약관에 동의해 주세요.</ErrorMessage>}
+
 							<ButtonContainer>
 								<PreviousButton onClick={() => navigate('/login')}>취소</PreviousButton>
-								<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
+								<Button
+									state={isStepFirstValid}
+									onClick={() => {
+										if (!isStepFirstValid) {
+											setFirstButtonClick(true);
+										} else {
+											setStep(2);
+											setFirstButtonClick(false);
+										}
+									}}>
 									다음
 								</Button>
 							</ButtonContainer>
@@ -304,24 +326,41 @@ const Signup = () => {
 					)}
 					{step === 2 && (
 						<>
-							<TermsTitle>이름</TermsTitle>
-							<Input type="text" name="name" placeholder="이름" value={form.name} onChange={handleInformationChange} />
+							<InputContainer>
+								<TermsTitle>이름</TermsTitle>
+								<Input
+									type="text"
+									name="name"
+									value={form.name}
+									onChange={handleInformationChange}
+									placeholder="이름"
+								/>
+								<TermsTitle>아이디</TermsTitle>
+								<Input type="text" name="id" value={form.id} onChange={handleInformationChange} placeholder="아이디" />
+								<TermsTitle>이메일</TermsTitle>
+								<Input
+									type="email"
+									name="email"
+									value={form.email}
+									onChange={handleInformationChange}
+									placeholder="이메일"
+								/>
+							</InputContainer>
 
-							<TermsTitle>아이디</TermsTitle>
-							<Input type="text" name="id" placeholder="아이디" value={form.id} onChange={handleInformationChange} />
-
-							<TermsTitle>이메일</TermsTitle>
-							<Input
-								type="email"
-								name="email"
-								placeholder="이메일"
-								value={form.email}
-								onChange={handleInformationChange}
-							/>
+							{secondButtonClick && !isStepSecondValid && <ErrorMessage>올바르지 않은 정보가 있습니다.</ErrorMessage>}
 
 							<ButtonContainer>
 								<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
-								<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
+								<Button
+									state={isStepSecondValid}
+									onClick={() => {
+										if (!isStepSecondValid) {
+											setSecondButtonClick(true);
+										} else {
+											setStep(3);
+											setSecondButtonClick(false);
+										}
+									}}>
 									다음
 								</Button>
 							</ButtonContainer>
@@ -329,39 +368,51 @@ const Signup = () => {
 					)}
 					{step === 3 && (
 						<>
-							<TermsTitle>비밀번호</TermsTitle>
 							<InputContainer>
+								<TermsTitle>비밀번호</TermsTitle>
 								<Input
 									type={passwordVisible ? 'text' : 'password'}
-									name="password"
-									placeholder="비밀번호"
 									value={password}
 									onChange={e => {
 										setPassword(e.target.value);
 										handleInformationChange(e);
 									}}
+									placeholder="비밀번호"
 								/>
-								<PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
-									<img src={passwordVisible ? passwordShow : passwordHide} />
+								<PasswordShowButton onClick={() => setPasswordVisible(prev => !prev)}>
+									<img src={passwordVisible ? passwordHide : passwordShow} />
 								</PasswordShowButton>
 							</InputContainer>
 
-							<TermsTitle>비밀번호 확인</TermsTitle>
 							<InputContainer>
+								<TermsTitle>비밀번호 확인</TermsTitle>
 								<Input
 									type={confirmPasswordVisible ? 'text' : 'password'}
-									placeholder="비밀번호 확인"
 									value={confirmPassword}
 									onChange={handleConfirmPasswordChange}
+									placeholder="비밀번호 확인"
 								/>
-								<PasswordShowButton onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
-									<img src={confirmPasswordVisible ? passwordShow : passwordHide} alt="비밀번호 보기" />
+								<PasswordShowButton onClick={() => setConfirmPasswordVisible(prev => !prev)}>
+									<img src={confirmPasswordVisible ? passwordHide : passwordShow} />
 								</PasswordShowButton>
 							</InputContainer>
+
+							{thirdButtonClick && !isStepThirdValid && <ErrorMessage>비밀번호를 확인해주세요.</ErrorMessage>}
+
 							<ButtonContainer>
 								<PreviousButton onClick={() => setStep(2)}>이전</PreviousButton>
-								<Button disabled={!isStepThirdValid} onClick={() => setStep(4)}>
-									회원 가입
+								<Button
+									state={isStepThirdValid}
+									onClick={() => {
+										if (!isStepThirdValid) {
+											setThirdButtonClick(true);
+										} else {
+											setStep(4);
+											setThirdButtonClick(false);
+											form.password = password;
+										}
+									}}>
+									회원가입
 								</Button>
 							</ButtonContainer>
 						</>
@@ -374,11 +425,7 @@ const Signup = () => {
 								로그인 화면으로 이동하여 로그인하세요.
 							</p>
 
-							<PreviousButton
-								onClick={() => {
-									alert(`이메일: ${form.email}\n아이디: ${form.id}\n이름: ${form.name}\n비밀번호: ${form.password}`);
-									navigate('/login');
-								}}>
+							<PreviousButton onClick={() => {navigate('/login');}}>
 								로그인으로 이동
 							</PreviousButton>
 						</>
