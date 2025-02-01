@@ -22,6 +22,14 @@ const InnerContainer = styled.div`
 	align-items: center;
 `;
 
+const TermsTitle = styled.div`
+	font-size: 1rem;
+	font-weight: bold;
+	color: ${({ theme }) => theme.COLOR.GRAY700};
+	margin-bottom: 0.5rem;
+	text-align: left;
+`;
+
 const Indicator = styled.div<{ isActive: number }>`
 	display: flex;
 	margin-right: 10px;
@@ -255,6 +263,7 @@ const Signup = () => {
 				<SignupBox>
 					{step === 1 && (
 						<>
+							<TermsTitle>이용 약관</TermsTitle>
 							<CheckboxLabel>
 								<CheckboxInput type="checkbox" checked={termsAccepted} onChange={handleToggleTerms} />
 								약관 전체 동의
@@ -295,8 +304,13 @@ const Signup = () => {
 					)}
 					{step === 2 && (
 						<>
+							<TermsTitle>이름</TermsTitle>
 							<Input type="text" name="name" placeholder="이름" value={form.name} onChange={handleInformationChange} />
+
+							<TermsTitle>아이디</TermsTitle>
 							<Input type="text" name="id" placeholder="아이디" value={form.id} onChange={handleInformationChange} />
+
+							<TermsTitle>이메일</TermsTitle>
 							<Input
 								type="email"
 								name="email"
@@ -304,6 +318,7 @@ const Signup = () => {
 								value={form.email}
 								onChange={handleInformationChange}
 							/>
+
 							<ButtonContainer>
 								<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
 								<Button disabled={!isStepSecondValid} onClick={() => setStep(3)}>
@@ -314,6 +329,7 @@ const Signup = () => {
 					)}
 					{step === 3 && (
 						<>
+							<TermsTitle>비밀번호</TermsTitle>
 							<InputContainer>
 								<Input
 									type={passwordVisible ? 'text' : 'password'}
@@ -329,6 +345,8 @@ const Signup = () => {
 									<img src={passwordVisible ? passwordShow : passwordHide} />
 								</PasswordShowButton>
 							</InputContainer>
+
+							<TermsTitle>비밀번호 확인</TermsTitle>
 							<InputContainer>
 								<Input
 									type={confirmPasswordVisible ? 'text' : 'password'}
