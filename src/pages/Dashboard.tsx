@@ -2,8 +2,11 @@ import { useState } from 'react';
 import * as S from '@/styles/pages/Dashboard.style';
 
 import SideBar from '@components/Dashboard/DashSideBar';
-import Header from '@/components/Dashboard/Header';
-import ProjectCard from '@/components/Dashboard/ProjectCard';
+import Header from '@components/Dashboard/Header';
+import ProjectCard from '@components/Dashboard/ProjectCard';
+import CreateModModal from '@components/DashboardModal/CreateModModal';
+import DeleteModModal from '@components/DashboardModal/DeleteModModal';
+import InviteModal from '@components/DashboardModal/InviteModal';
 
 const Projects = [
 	{
@@ -17,11 +20,42 @@ const Projects = [
 ];
 
 function Dashboard() {
-	// 현재 선택된 메뉴 상태 (초기값: "모든 프로젝트")
 	const [selectedMenu, setSelectedMenu] = useState<'all' | 'recent'>('all');
+	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+	const [editingProject, setEditingProject] = useState<null | (typeof Projects)[number]>(null);
+	const [deletingProject, setDeletingProject] = useState<null | (typeof Projects)[number]>(null);
 
-	// 프로젝트가 존재하는지 확인
 	const hasProjects = Projects.length > 0;
+
+	const openCreateModal = () => {
+		setEditingProject(null);
+		setIsCreateModalOpen(true);
+	};
+
+	const openEditModal = (project: (typeof Projects)[number]) => {
+		setEditingProject(project);
+		setIsCreateModalOpen(true);
+	};
+
+	const closeCreateModal = () => {
+		setIsCreateModalOpen(false);
+		setEditingProject(null);
+	};
+
+	const openDeleteModal = (project: (typeof Projects)[number]) => {
+		setDeletingProject(project);
+		setIsDeleteModalOpen(true);
+	};
+
+	const closeDeleteModal = () => {
+		setIsDeleteModalOpen(false);
+		setDeletingProject(null);
+	};
+
+	const openInviteModal = () => setIsInviteModalOpen(true);
+	const closeInviteModal = () => setIsInviteModalOpen(false);
 
 	return (
 		<>
@@ -32,13 +66,20 @@ function Dashboard() {
 					<S.TopSpace>
 						<S.Title>{selectedMenu === 'all' ? '모든 프로젝트' : '최근 프로젝트'}</S.Title>
 						<S.ButtonSpace>
-							<S.Button>+ 프로젝트 생성</S.Button>
-							{hasProjects && <S.Button>+ 초대 코드</S.Button>}
+							<S.Button onClick={openCreateModal}>+ 프로젝트 생성</S.Button>
+							{hasProjects && <S.Button onClick={openInviteModal}>+ 초대 코드</S.Button>}
 						</S.ButtonSpace>
 					</S.TopSpace>
 					<S.ProjectSpace>
 						{hasProjects ? (
-							Projects.map((project, index) => <ProjectCard key={index} {...project} />)
+							Projects.map((project, index) => (
+								<ProjectCard
+									key={index}
+									{...project}
+									onEdit={() => openEditModal(project)}
+									onDelete={() => openDeleteModal(project)}
+								/>
+							))
 						) : (
 							<S.NonProject>
 								프로젝트가 없습니다.
@@ -49,7 +90,18 @@ function Dashboard() {
 					</S.ProjectSpace>
 				</S.Space>
 			</S.Dashboard>
+
+			{isCreateModalOpen && (
+				<CreateModModal
+					onClose={closeCreateModal}
+					isCreate={!editingProject}
+					initialData={editingProject ?? undefined}
+				/>
+			)}
+			{isDeleteModalOpen && deletingProject && <DeleteModModal onClose={closeDeleteModal} project={deletingProject} />}
+			{isInviteModalOpen && <InviteModal onClose={closeInviteModal} />}
 		</>
 	);
 }
+
 export default Dashboard;

@@ -1,0 +1,100 @@
+import { useState } from 'react';
+import * as S from '@components/DashboardModal/Modal.style';
+
+import InputText from '@components/Common/InputText';
+import ActiveButton from '@components/Common/ActiveButton';
+import Button from '@components/Common/Button';
+
+interface DeleteModProps {
+	onClose?: React.MouseEventHandler<HTMLDivElement>;
+	project: {
+		title: string;
+		user: string;
+		date: string;
+		member?: string;
+	};
+}
+
+const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
+	const [projectName, setProjectName] = useState('');
+	const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+	const [warningMessage, setWarningMessage] = useState('프로젝트 삭제를 원하시면 해당 프로젝트의 이름을 입력하세요.');
+
+	const handleInputChange = (value: string) => {
+		const trimmedValue = value.trim();
+		setProjectName(trimmedValue);
+
+		if (trimmedValue.length === 0) {
+			setWarningMessage('프로젝트 삭제를 원하시면 해당 프로젝트의 이름을 입력하세요.');
+			setIsProjectNameValid(false);
+		} else if (trimmedValue !== project.title) {
+			setWarningMessage('프로젝트 이름이 일치하지 않습니다. 다시 확인하세요.');
+			setIsProjectNameValid(false);
+		} else {
+			setWarningMessage('');
+			setIsProjectNameValid(true);
+		}
+	};
+
+	console.log(projectName);
+
+	const isFormValid = isProjectNameValid;
+
+	const handleSubmit = (event: React.MouseEvent<HTMLDivElement>) => {
+		if (!isProjectNameValid) {
+			setWarningMessage('프로젝트 이름이 일치하지 않습니다. 다시 확인하세요.');
+			return;
+		}
+
+		console.log('프로젝트 삭제 버튼 클릭됨');
+		if (onClose) {
+			onClose(event);
+		}
+	};
+
+	return (
+		<>
+			<S.ModalBackground onClick={onClose} />
+			<S.ModalSpace>
+				<S.ModalWrap>
+					<S.ModalContent>
+						<S.TextGroup>
+							<S.Title>프로젝트 삭제</S.Title>
+							<S.DescriptionGroup>
+								<S.Label>프로젝트</S.Label>
+								<S.Text>{project.title}</S.Text>
+							</S.DescriptionGroup>
+							<S.DescriptionGroup>
+								<S.Label>생성자</S.Label>
+								<S.Text>{project.user}</S.Text>
+							</S.DescriptionGroup>
+							<S.DescriptionGroup>
+								<S.Label>팀원</S.Label>
+								<S.Text>{project?.member}</S.Text>
+							</S.DescriptionGroup>
+							<S.DescriptionGroup>
+								<S.Label>생성일자</S.Label>
+								<S.Text>{project.date}</S.Text>
+							</S.DescriptionGroup>
+						</S.TextGroup>
+						<S.TextGroup>
+							<InputText
+								label="프로젝트 삭제를 위해 프로젝트 이름을 입력하세요."
+								placeholder="프로젝트 이름을 입력하세요."
+								warningMsg={warningMessage}
+								isEssential={true}
+								onInputChange={handleInputChange}
+							/>
+						</S.TextGroup>
+						<S.ButtonGroup>
+							<ActiveButton onClick={handleSubmit} text="삭제" isActive={isFormValid} isLarge={false} />
+							<Button onClick={onClose} text="취소" isLarge={false} />
+						</S.ButtonGroup>
+					</S.ModalContent>
+				</S.ModalWrap>
+			</S.ModalSpace>
+		</>
+	);
+};
+
+export default DeleteModModal;

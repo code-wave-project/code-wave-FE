@@ -13,9 +13,11 @@ interface ProjectCardProps {
 	date: string;
 	member: string;
 	inviteCode: string;
+	onEdit?: () => void;
+	onDelete?: () => void;
 }
 
-function ProjectCard({ title, text, user, date, member, inviteCode }: ProjectCardProps) {
+function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDelete }: ProjectCardProps) {
 	const [isHidden, setIsHidden] = useState(true);
 
 	const toggleHidden = () => {
@@ -60,18 +62,19 @@ function ProjectCard({ title, text, user, date, member, inviteCode }: ProjectCar
 							{!isHidden && <S.Copy onClick={handleCopy}>복사</S.Copy>}
 						</S.HideGroup>
 						<S.HideIcon
-							src={isHidden ? ShowIcon : HideIcon}
+							src={isHidden ? HideIcon : ShowIcon}
 							alt={isHidden ? '비밀번호 보기' : '비밀번호 숨기기'}
 							onClick={toggleHidden}
 						/>
 					</S.SubGroup>
 				</S.Group>
 				<S.SelectGroup>
-					<S.Icon src={EditIcon} alt="프로젝트 수정하기" />
-					<S.Icon src={DeleteIcon} alt="프로젝트 삭제하기" />
+					<S.Icon src={EditIcon} alt="프로젝트 수정하기" onClick={() => onEdit?.()} />
+					<S.Icon src={DeleteIcon} alt="프로젝트 삭제하기" onClick={() => onDelete?.()} />
 				</S.SelectGroup>
 			</S.ProjectCard>
 		</>
 	);
 }
+
 export default ProjectCard;
