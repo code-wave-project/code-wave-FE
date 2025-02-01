@@ -120,6 +120,12 @@ const CheckboxInput = styled.input`
 	}
 `;
 
+const CustomHr = styled.hr`
+	width: 50%;
+	border: 1px solid ${({ theme }) => theme.COLOR.GRAY200};
+	margin-bottom: 1rem;
+`;
+
 const Signup = () => {
 	const [step, setStep] = useState(1);
 	const [form, setForm] = useState({ name: '', id: '', email: '', password: '' });
@@ -169,7 +175,7 @@ const Signup = () => {
 							<CheckboxInput type="checkbox" checked={termsAccepted} onChange={handleToggleTerms} />
 							약관 전체 동의
 						</CheckboxLabel>
-
+						<CustomHr />
 						<CheckboxLabel>
 							<CheckboxInput type="checkbox" checked={serviceTerms} onChange={() => setServiceTerms(!serviceTerms)} />
 							코드웨이브 이용약관 동의
