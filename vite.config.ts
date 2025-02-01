@@ -4,7 +4,14 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), svgr()],
+	plugins: [
+		react(),
+		svgr({
+			svgrOptions: {
+				icon: true, // 아이콘을 위한 설정
+			},
+		}),
+	],
 	resolve: {
 		alias: [
 			{ find: '@', replacement: '/src' },
