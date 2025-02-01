@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import logoHeader from '../assets/logos/logo_header.png';
 import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
+import moreButton from '../assets/icons/more.svg';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -120,6 +121,17 @@ const CheckboxInput = styled.input`
 	}
 `;
 
+const MoreButton = styled.button`
+	background: none;
+	border: none;
+	cursor: pointer;
+`;
+
+const TextHighLight = styled.p`
+	margin-right: 5px;
+	color: ${({ theme }) => theme.COLOR.BLUE500};
+`
+
 const CustomHr = styled.hr`
 	width: 50%;
 	border: 1px solid ${({ theme }) => theme.COLOR.GRAY200};
@@ -174,11 +186,19 @@ const Signup = () => {
 						<CheckboxLabel>
 							<CheckboxInput type="checkbox" checked={termsAccepted} onChange={handleToggleTerms} />
 							약관 전체 동의
+							<MoreButton>
+								<img src={moreButton} />
+							</MoreButton>
 						</CheckboxLabel>
+						
 						<CustomHr />
+
 						<CheckboxLabel>
 							<CheckboxInput type="checkbox" checked={serviceTerms} onChange={() => setServiceTerms(!serviceTerms)} />
-							코드웨이브 이용약관 동의
+							<TextHighLight>필수</TextHighLight>코드웨이브 이용약관 동의
+							<MoreButton>
+								<img src={moreButton} />
+							</MoreButton>
 						</CheckboxLabel>
 
 						<CheckboxLabel>
@@ -187,7 +207,10 @@ const Signup = () => {
 								checked={privacyPolicy}
 								onChange={() => setPrivacyPolicy(!privacyPolicy)}
 							/>
-							개인정보 수집 및 이용 동의
+							<TextHighLight>필수</TextHighLight>개인정보 수집 및 이용 동의
+							<MoreButton>
+								<img src={moreButton} />
+							</MoreButton>
 						</CheckboxLabel>
 						<Button disabled={!isStepOneValid} onClick={() => setStep(2)}>
 							다음
