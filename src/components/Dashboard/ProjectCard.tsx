@@ -5,6 +5,7 @@ import HideIcon from '@assets/icons/password_hide.svg';
 import ShowIcon from '@assets/icons/password_show.svg';
 import EditIcon from '@assets/icons/project_edit.svg';
 import DeleteIcon from '@assets/icons/project_delete.svg';
+import ToastMessage from '@components/Common/ToastMessage';
 
 interface ProjectCardProps {
 	title: string;
@@ -19,6 +20,7 @@ interface ProjectCardProps {
 
 function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDelete }: ProjectCardProps) {
 	const [isHidden, setIsHidden] = useState(true);
+	const [isToastVisible, setIsToastVisible] = useState(false);
 
 	const toggleHidden = () => {
 		setIsHidden(prev => !prev);
@@ -29,7 +31,10 @@ function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDe
 			navigator.clipboard
 				.writeText(inviteCode)
 				.then(() => {
-					alert('초대코드가 복사되었습니다!');
+					setIsToastVisible(true);
+					setTimeout(() => {
+						setIsToastVisible(false);
+					}, 1500);
 				})
 				.catch(err => {
 					console.error('복사 실패:', err);
@@ -73,6 +78,8 @@ function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDe
 					<S.Icon src={DeleteIcon} alt="프로젝트 삭제하기" onClick={() => onDelete?.()} />
 				</S.SelectGroup>
 			</S.ProjectCard>
+
+			{isToastVisible && <ToastMessage text="초대코드가 복사되었습니다! 팀원에게 초대 코드를 공유하세요." />}
 		</>
 	);
 }
