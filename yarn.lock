@@ -1624,7 +1624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.64.1":
+"@tanstack/react-query@npm:^5.66.0":
   version: 5.66.0
   resolution: "@tanstack/react-query@npm:5.66.0"
   dependencies:
@@ -6050,7 +6050,7 @@ __metadata:
     "@storybook/react": "npm:8.6.0-alpha.0"
     "@storybook/react-vite": "npm:8.6.0-alpha.0"
     "@storybook/test": "npm:8.6.0-alpha.0"
-    "@tanstack/react-query": "npm:^5.64.1"
+    "@tanstack/react-query": "npm:^5.66.0"
     "@tanstack/react-query-devtools": "npm:^5.64.1"
     "@types/node": "npm:^22.10.7"
     "@types/prettier": "npm:^3.0.0"

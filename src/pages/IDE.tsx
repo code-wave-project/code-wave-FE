@@ -52,7 +52,7 @@ const IDE: React.FC<IDEProps> = ({ initialPanel = null }) => {
 					<Panel openPanel={openPanel} />
 				</SidebarContainer>
 				<MainContent hasPanel={Boolean(openPanel)}>
-					<Editor />
+					<Editor onSave={() => {}} />
 				</MainContent>
 			</Container>
 		</OuterContainer>
