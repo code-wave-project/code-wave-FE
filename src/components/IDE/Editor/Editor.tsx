@@ -9,7 +9,7 @@ import { Container, EditorContainer, EmptyContainer, EmptyText } from './Editor.
 import { EditorProps, TabType } from './Editor.d';
 import { TabBar } from './TabBar/TabBar';
 import { AppBar } from './AppBar/AppBar';
-import Footer from './Footer/Footer';
+// import Footer from './Footer/Footer';
 
 // Monaco Editor 웹 워커 설정
 self.MonacoEnvironment = {
@@ -31,20 +31,7 @@ self.MonacoEnvironment = {
 };
 
 export const Editor: React.FC<EditorProps> = ({ onSave }) => {
-	const [tabs, setTabs] = useState<TabType[]>([
-		{
-			id: '1',
-			title: 'index.html',
-			path: 'index.html',
-			content: 'html',
-		},
-		{
-			id: '2',
-			title: 'index.py',
-			path: 'index.py',
-			content: 'python',
-		},
-	]);
+	const [tabs, setTabs] = useState<TabType[]>([]);
 	const [activeTabId, setActiveTabId] = useState<string | null>(null);
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 	const monacoEl = useRef<HTMLDivElement>(null);
@@ -143,7 +130,7 @@ export const Editor: React.FC<EditorProps> = ({ onSave }) => {
 					<EmptyText>선택된 파일이 없습니다</EmptyText>
 				</EmptyContainer>
 			)}
-			<Footer />
+			{/* <Footer /> */}
 		</Container>
 	);
 };
