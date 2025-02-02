@@ -4,5 +4,5 @@ export interface TabBarProps {
 	tabs: TabType[];
 	activeTabId: string | null;
 	onTabClick: (tabId: string) => void;
-	onTabClose: (tabId: string, event: React.MouseEvent) => void;
+	removeTab: (tabId: string) => void;
 }

@@ -59,3 +59,11 @@ export const CloseButton = styled.button`
 		}
 	}
 `;
+
+export const SaveIndicator = styled.div`
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #64d2ff;
+	margin-right: 4px;
+`;

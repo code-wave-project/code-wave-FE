@@ -5,6 +5,7 @@ import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
 import moreButton from '../assets/icons/more.svg';
 import { useNavigate } from 'react-router-dom';
+import { useSignUp } from '@/hooks/auth/useSignUp';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -210,21 +211,18 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
 	const [step, setStep] = useState(1);
-	const [form, setForm] = useState({ name: '', id: '', email: '', password: '' });
-	const [termsAccepted, setTermsAccepted] = useState(false);
-	const [serviceTerms, setServiceTerms] = useState(false);
-	const [privacyPolicy, setPrivacyPolicy] = useState(false);
-	const [isStepFirstValid, setIsFirstValid] = useState(false);
-	const [password, setPassword] = useState('');
+	const [form, setForm] = useState({ name: '', email: '', password: '' });
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 	const [error, setError] = useState(false);
 	const navigate = useNavigate();
+	const { signUp, isLoading, error: signUpError } = useSignUp();
 
-	const [firstButtonClick, setFirstButtonClick] = useState(false);
-	const [secondButtonClick, setSecondButtonClick] = useState(false);
-	const [thirdButtonClick, setThirdButtonClick] = useState(false);
+	const [termsAccepted, setTermsAccepted] = useState(false);
+	const [serviceTerms, setServiceTerms] = useState(false);
+	const [privacyPolicy, setPrivacyPolicy] = useState(false);
+	const [isStepFirstValid, setIsFirstValid] = useState(false);
 
 	useEffect(() => {
 		const allChecked = serviceTerms && privacyPolicy;
@@ -248,15 +246,28 @@ const Signup = () => {
 	};
 
 	const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-	const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/; // 대소문자 상관없는 영어, 숫자, 특수문자 하나 이상 포함
+	const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
 
-	const isStepSecondValid = !!(form.name && form.id && form.email && emailRegex.test(form.email));
+	const isStepSecondValid = !!(form.name && form.email && emailRegex.test(form.email));
 	const isStepThirdValid = !!(
-		password &&
+		form.password &&
 		confirmPassword &&
-		password === confirmPassword &&
-		passwordRegex.test(password)
+		form.password === confirmPassword &&
+		passwordRegex.test(form.password)
 	);
+
+	const handleSignUp = async () => {
+		try {
+			await signUp({
+				email: form.email,
+				password: form.password,
+				name: form.name,
+			});
+		} catch (error) {
+			console.error('회원가입 실패:', error);
+			setError(true);
+		}
+	};
 
 	return (
 		<OuterContainer>
@@ -314,7 +325,7 @@ const Signup = () => {
 								</MoreButton>
 							</CheckboxLabel>
 
-							{firstButtonClick && !isStepFirstValid && <ErrorMessage>약관에 동의해 주세요.</ErrorMessage>}
+							{error && <ErrorMessage>약관에 동의해 주세요.</ErrorMessage>}
 
 							<ButtonContainer>
 								<PreviousButton onClick={() => navigate('/login')}>취소</PreviousButton>
@@ -322,10 +333,10 @@ const Signup = () => {
 									state={isStepFirstValid}
 									onClick={() => {
 										if (!isStepFirstValid) {
-											setFirstButtonClick(true);
+											setError(true);
 										} else {
 											setStep(2);
-											setFirstButtonClick(false);
+											setError(false);
 										}
 									}}>
 									다음
@@ -345,15 +356,6 @@ const Signup = () => {
 									onChange={handleInformationChange}
 									placeholder="이름"
 								/>
-								<TermsTitle>아이디</TermsTitle>
-								<Input
-									state={error}
-									type="text"
-									name="id"
-									value={form.id}
-									onChange={handleInformationChange}
-									placeholder="아이디"
-								/>
 								<TermsTitle>이메일</TermsTitle>
 								<Input
 									state={error}
@@ -365,7 +367,7 @@ const Signup = () => {
 								/>
 							</InputContainer>
 
-							{secondButtonClick && !isStepSecondValid && <ErrorMessage>올바르지 않은 정보가 있습니다.</ErrorMessage>}
+							{error && <ErrorMessage>올바르지 않은 정보가 있습니다.</ErrorMessage>}
 
 							<ButtonContainer>
 								<PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
@@ -373,11 +375,9 @@ const Signup = () => {
 									state={isStepSecondValid}
 									onClick={() => {
 										if (!isStepSecondValid) {
-											setSecondButtonClick(true);
 											setError(true);
 										} else {
 											setStep(3);
-											setSecondButtonClick(false);
 											setError(false);
 										}
 									}}>
@@ -393,11 +393,9 @@ const Signup = () => {
 								<Input
 									state={error}
 									type={passwordVisible ? 'text' : 'password'}
-									value={password}
-									onChange={e => {
-										setPassword(e.target.value);
-										handleInformationChange(e);
-									}}
+									name="password"
+									value={form.password}
+									onChange={handleInformationChange}
 									placeholder="비밀번호"
 								/>
 								<PasswordShowButton onClick={() => setPasswordVisible(prev => !prev)}>
@@ -419,7 +417,8 @@ const Signup = () => {
 								</PasswordShowButton>
 							</InputContainer>
 
-							{thirdButtonClick && !isStepThirdValid && <ErrorMessage>비밀번호를 확인해주세요.</ErrorMessage>}
+							{error && <ErrorMessage>비밀번호를 확인해주세요.</ErrorMessage>}
+							{signUpError && <ErrorMessage>{signUpError.message}</ErrorMessage>}
 
 							<ButtonContainer>
 								<PreviousButton onClick={() => setStep(2)}>이전</PreviousButton>
@@ -427,16 +426,13 @@ const Signup = () => {
 									state={isStepThirdValid}
 									onClick={() => {
 										if (!isStepThirdValid) {
-											setThirdButtonClick(true);
 											setError(true);
 										} else {
-											setStep(4);
-											setThirdButtonClick(false);
-											form.password = password;
-											setError(false);
+											handleSignUp();
 										}
-									}}>
-									회원가입
+									}}
+									disabled={isLoading}>
+									{isLoading ? '가입 중...' : '회원가입'}
 								</Button>
 							</ButtonContainer>
 						</>

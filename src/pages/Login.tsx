@@ -196,6 +196,9 @@ const Login = () => {
 			});
 		} catch (error) {
 			console.error('Login failed:', error);
+			if(error === 500){
+				navigate('/errorServer');
+			}
 		}
 	};
 

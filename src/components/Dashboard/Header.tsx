@@ -47,7 +47,7 @@ function Header() {
 						<S.DropdownContainer $isVisible={isDropdownVisible}>
 							<S.DropdownItem onClick={() => handleNavLinkClick('/profile')} $isLogOut={false}>
 								<S.UserIcon src={UserIcon} alt="프로필" />
-								USER01
+								user
 								<S.Icon src={EditIcon} alt="프로필 수정" />
 							</S.DropdownItem>
 							<S.DropdownItem onClick={() => handleLogoutClick()} $isLogOut={true}>

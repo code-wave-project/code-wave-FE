@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from '@components/Dashboard/DashSideBar.style';
 
 import DashMenu from '@components/Dashboard/DashMenu';
@@ -15,6 +16,7 @@ interface DashSideBarProps {
 }
 
 function DashSideBar({ selectedMenu, setSelectedMenu }: DashSideBarProps) {
+	const navigate = useNavigate();
 	// 다크 모드 상태
 	const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -29,11 +31,15 @@ function DashSideBar({ selectedMenu, setSelectedMenu }: DashSideBarProps) {
 		}
 	}, [isDarkMode]);
 
+	const handleNavLinkClick = (path: string): void => {
+		navigate(path);
+	};
+
 	return (
 		<>
 			<S.DashSideBar>
 				<S.TopSpace>
-					<S.Logo src={Logo} alt="CodeWave" />
+					<S.Logo src={Logo} alt="CodeWave" onClick={() => handleNavLinkClick('/')} />
 					<S.Line />
 					<S.SelectSpace>
 						<DashMenu

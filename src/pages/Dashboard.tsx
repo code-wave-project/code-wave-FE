@@ -71,7 +71,13 @@ function Dashboard() {
 	};
 
 	const openInviteModal = () => setIsInviteModalOpen(true);
-	const closeInviteModal = () => setIsInviteModalOpen(false);
+
+	const closeInviteModal = () => {
+		setTimeout(() => {
+			setIsInviteModalOpen(false);
+			checkProjects();
+		}, 1000);
+	};
 
 	return (
 		<>
