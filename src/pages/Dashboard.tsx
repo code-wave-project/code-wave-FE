@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from '@/styles/pages/Dashboard.style';
 
 import SideBar from '@components/Dashboard/DashSideBar';
@@ -8,50 +9,65 @@ import CreateModModal from '@components/DashboardModal/CreateModModal';
 import DeleteModModal from '@components/DashboardModal/DeleteModModal';
 import InviteModal from '@components/DashboardModal/InviteModal';
 
-const Projects = [
-	{
-		title: '프로젝트 제목',
-		text: '프로젝트 설명입니다.',
-		user: 'USER',
-		date: '0000.00.00.(0)',
-		member: 'USER, USER',
-		inviteCode: 'PW1234',
-	},
-];
+import { useCheckProjects } from '@/hooks/dashboard/useCheckProjects';
 
 function Dashboard() {
+	const { checkProjects, data, isLoading, isError } = useCheckProjects();
+	const projects = data?.data?.projects ?? [];
+	const navigate = useNavigate();
+
 	const [selectedMenu, setSelectedMenu] = useState<'all' | 'recent'>('all');
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
-	const [editingProject, setEditingProject] = useState<null | (typeof Projects)[number]>(null);
-	const [deletingProject, setDeletingProject] = useState<null | (typeof Projects)[number]>(null);
+	const [editingProject, setEditingProject] = useState<null | (typeof projects)[number]>(null);
+	const [deletingProject, setDeletingProject] = useState<null | (typeof projects)[number]>(null);
 
-	const hasProjects = Projects.length > 0;
+	useEffect(() => {
+		checkProjects();
+	}, []);
+
+	const handleNavLinkClick = (path: string): void => {
+		navigate(path);
+	};
+
+	const hasProjects = projects?.length > 0;
+
+	const sortedProjects = [...projects].sort(
+		(a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+	);
+
+	const displayedProjects = selectedMenu === 'recent' ? sortedProjects : projects;
 
 	const openCreateModal = () => {
 		setEditingProject(null);
 		setIsCreateModalOpen(true);
 	};
 
-	const openEditModal = (project: (typeof Projects)[number]) => {
+	const openEditModal = (project: (typeof projects)[number]) => {
 		setEditingProject(project);
 		setIsCreateModalOpen(true);
 	};
 
 	const closeCreateModal = () => {
-		setIsCreateModalOpen(false);
-		setEditingProject(null);
+		setTimeout(() => {
+			setIsCreateModalOpen(false);
+			setEditingProject(null);
+			checkProjects();
+		}, 1000);
 	};
 
-	const openDeleteModal = (project: (typeof Projects)[number]) => {
+	const openDeleteModal = (project: (typeof projects)[number]) => {
 		setDeletingProject(project);
 		setIsDeleteModalOpen(true);
 	};
 
 	const closeDeleteModal = () => {
-		setIsDeleteModalOpen(false);
-		setDeletingProject(null);
+		setTimeout(() => {
+			setIsDeleteModalOpen(false);
+			setDeletingProject(null);
+			checkProjects();
+		}, 1000);
 	};
 
 	const openInviteModal = () => setIsInviteModalOpen(true);
@@ -71,13 +87,23 @@ function Dashboard() {
 						</S.ButtonSpace>
 					</S.TopSpace>
 					<S.ProjectSpace>
-						{hasProjects ? (
-							Projects.map((project, index) => (
+						{isLoading ? (
+							<S.NonProject>로딩 중...</S.NonProject>
+						) : isError ? (
+							<S.NonProject>프로젝트를 불러오는 중 오류가 발생했습니다.</S.NonProject>
+						) : displayedProjects.length > 0 ? (
+							displayedProjects.map(project => (
 								<ProjectCard
-									key={index}
-									{...project}
+									key={project.id}
+									title={project.title}
+									text={project.description}
+									user={project.initiator}
+									date={new Date(project.createdAt).toLocaleDateString()}
+									member="USER, USER" // 멤버 데이터가 필요하면 API 수정 필요
+									inviteCode={project.inviteCode}
 									onEdit={() => openEditModal(project)}
 									onDelete={() => openDeleteModal(project)}
+									onClick={() => handleNavLinkClick(`/editor/${project.id}`)}
 								/>
 							))
 						) : (

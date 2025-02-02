@@ -6,11 +6,12 @@ interface InputTextProps {
 	placeholder: string;
 	warningMsg?: string;
 	isEssential?: boolean;
+	value?: string;
 	onInputChange?: (value: string, isEssential?: boolean) => void;
 }
 
-function InputText({ label, placeholder, warningMsg, isEssential, onInputChange }: InputTextProps) {
-	const [inputData, setInputData] = useState('');
+function InputText({ label, placeholder, warningMsg, isEssential, value, onInputChange }: InputTextProps) {
+	const [inputData, setInputData] = useState(value || '');
 	const [showWarning, setShowWarning] = useState(false);
 	const [hasInteracted, setHasInteracted] = useState(false);
 
@@ -23,6 +24,10 @@ function InputText({ label, placeholder, warningMsg, isEssential, onInputChange 
 			onInputChange(value, isEssential);
 		}
 	};
+
+	useEffect(() => {
+		setInputData(value || '');
+	}, [value]);
 
 	useEffect(() => {
 		if (isEssential && hasInteracted && inputData.trim().length === 0) {

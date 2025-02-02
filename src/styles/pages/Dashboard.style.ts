@@ -48,7 +48,7 @@ export const ProjectSpace = styled.div`
 	display: flex;
 	padding: 0 39px 30px 48px;
 	width: calc(100vw - 240px);
-	height: calc(100vh - 174px);
+	max-height: calc(100vh - 174px);
 	overflow-y: scroll;
 	flex-wrap: wrap;
 	row-gap: 24px;

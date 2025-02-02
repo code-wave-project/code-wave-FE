@@ -74,5 +74,4 @@ export const Label = styled.div`
 export const Text = styled.div`
 	color: ${theme.COLOR.GRAY600};
 	font-weight: 400;
-	text-transform: uppercase;
 `;
