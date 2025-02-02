@@ -5,6 +5,8 @@ import InputText from '@components/Common/InputText';
 import ActiveButton from '@components/Common/ActiveButton';
 import Button from '@components/Common/Button';
 
+import { useJoinProject } from '@/hooks/dashboard/useJoinProject';
+
 interface InviteModalProps {
 	onClose?: React.MouseEventHandler<HTMLDivElement>;
 }
@@ -12,6 +14,8 @@ interface InviteModalProps {
 const InviteModal = ({ onClose }: InviteModalProps) => {
 	const [inviteCode, setInviteCode] = useState('');
 	const [isinviteCodeValid, setIsInviteCodeValid] = useState(false);
+
+	const { joinProject, isLoading } = useJoinProject();
 
 	const handleInputChange = (value: string, isEssential?: boolean) => {
 		if (isEssential) {
@@ -25,11 +29,13 @@ const InviteModal = ({ onClose }: InviteModalProps) => {
 	const isFormValid = isinviteCodeValid;
 
 	const handleSubmit = (event: React.MouseEvent<HTMLDivElement>) => {
-		console.log('프로젝트 생성 또는 수정 버튼 클릭됨');
+		if (!isFormValid || isLoading) return;
 
-		if (onClose) {
-			onClose(event);
-		}
+		joinProject(inviteCode, {
+			onSuccess: () => {
+				if (onClose) onClose(event);
+			},
+		});
 	};
 
 	return (
@@ -49,7 +55,12 @@ const InviteModal = ({ onClose }: InviteModalProps) => {
 							/>
 						</S.TextGroup>
 						<S.ButtonGroup>
-							<ActiveButton onClick={handleSubmit} text="참여" isActive={isFormValid} isLarge={false} />
+							<ActiveButton
+								onClick={handleSubmit}
+								text={isLoading ? '참여 중...' : '참여'}
+								isActive={isFormValid}
+								isLarge={false}
+							/>
 							<Button onClick={onClose} text="취소" isLarge={false} />
 						</S.ButtonGroup>
 					</S.ModalContent>
