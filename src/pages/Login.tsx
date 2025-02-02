@@ -1,9 +1,4 @@
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useNavigate } from 'react-router-dom';
-// import * as S from '@/styles/pages/Login.style';
-
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logoHeader from '../assets/logos/logo_header.png';

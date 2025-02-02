@@ -129,7 +129,7 @@ const PreviousButton = styled.button`
 	border: 1px solid ${({ theme }) => theme.COLOR.BLUE500};
 	border-radius: 0.5rem;
 	border-radius: 10px;
-	cursor: pointer};
+	cursor: pointer;
 `;
 
 const Button = styled.button<{ state: boolean }>`
