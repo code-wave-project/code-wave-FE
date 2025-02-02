@@ -7,6 +7,7 @@ import logoKakao from '../assets/icons/login_kakao.svg';
 import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
 import { useSignIn } from '@/hooks/auth/useSignIn';
+import { useSupabaseSignIn } from '@/hooks/auth/useSupabaseSignIn';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -182,6 +183,7 @@ const Login = () => {
 	const [userID, setUserID] = useState('');
 	const [password, setPassword] = useState('');
 	const { signIn, isLoading, error: signInError } = useSignIn();
+	const { signIn: supabaseSignIn, isLoading: supabaseIsLoading, error: supabaseError } = useSupabaseSignIn();
 	const navigate = useNavigate();
 
 	// 테스트 계정
@@ -194,9 +196,13 @@ const Login = () => {
 				email: userID,
 				password: password,
 			});
+			await supabaseSignIn({
+				email: userID,
+				password: password,
+			});
 		} catch (error) {
 			console.error('Login failed:', error);
-			if(error === 500){
+			if (error === 500) {
 				navigate('/errorServer');
 			}
 		}

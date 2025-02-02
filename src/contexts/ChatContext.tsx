@@ -36,7 +36,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children, projectId 
 				const { data, error } = await supabase
 					.from('messages')
 					.select('*')
-					.eq('project_id', projectId)
+					.eq('project_id', 'f97505b9-fde8-4ed6-86cd-c5b316a4625d')
 					.order('created_at', { ascending: true });
 
 				if (error) throw error;
@@ -54,14 +54,14 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children, projectId 
 	// 실시간 구독 설정
 	useEffect(() => {
 		const channel = supabase
-			.channel(`project:${projectId}`)
+			.channel(`project:f97505b9-fde8-4ed6-86cd-c5b316a4625d`)
 			.on(
 				'postgres_changes',
 				{
 					event: 'INSERT',
 					schema: 'public',
 					table: 'messages',
-					filter: `project_id=eq.${projectId}`,
+					filter: `project_id=eq.f97505b9-fde8-4ed6-86cd-c5b316a4625d`,
 				},
 				payload => {
 					setMessages(prev => [...prev, payload.new as Message]);
@@ -85,7 +85,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children, projectId 
 			const { error } = await supabase.from('messages').insert([
 				{
 					content,
-					project_id: projectId,
+					project_id: 'f97505b9-fde8-4ed6-86cd-c5b316a4625d',
 					user_id: user.user.id,
 				},
 			]);

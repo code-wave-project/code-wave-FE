@@ -6,6 +6,7 @@ import passwordHide from '../assets/icons/password_hide.svg';
 import moreButton from '../assets/icons/more.svg';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '@/hooks/auth/useSignUp';
+import { useSupabaseSignUp } from '@/hooks/auth/useSupabaseSignUp';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -218,7 +219,7 @@ const Signup = () => {
 	const [error, setError] = useState(false);
 	const navigate = useNavigate();
 	const { signUp, isLoading, error: signUpError } = useSignUp();
-
+	const { signUp: supabaseSignUp, isLoading: supabaseIsLoading, error: supabaseError } = useSupabaseSignUp();
 	const [termsAccepted, setTermsAccepted] = useState(false);
 	const [serviceTerms, setServiceTerms] = useState(false);
 	const [privacyPolicy, setPrivacyPolicy] = useState(false);
@@ -257,12 +258,19 @@ const Signup = () => {
 	);
 
 	const handleSignUp = async () => {
+		if (!isStepThirdValid) {
+			setError(true);
+			return;
+		}
+
 		try {
 			await signUp({
 				email: form.email,
 				password: form.password,
 				name: form.name,
 			});
+			await supabaseSignUp({ email: form.email, password: form.password, name: form.name });
+			setStep(4); // 성공 시 완료 단계로 이동
 		} catch (error) {
 			console.error('회원가입 실패:', error);
 			setError(true);
