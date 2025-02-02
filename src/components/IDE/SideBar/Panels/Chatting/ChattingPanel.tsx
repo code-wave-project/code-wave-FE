@@ -3,59 +3,62 @@ import { ChattingContent, ChattingHeader, ChattingInput, Container } from './Cha
 import { SendChattingInput } from './Inputs/SendChattingInput/SendChattingInput';
 import { ChatMessage } from './ChattingPanel.d';
 import { DateDivider } from './DateDivider/DateDivider';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useChat } from '@/contexts/ChatContext';
+import { format } from 'date-fns';
+import { supabase } from '@/lib/supabase';
 
-export const ChattingPanel: React.FC = () => {
-	const [messages, setMessages] = useState<ChatMessage[]>([]);
+export const ChattingPanel: React.FC<{ projectId: string }> = () => {
+	const { messages: chatMessages } = useChat();
+	const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+	const messagesEndRef = useRef<HTMLDivElement>(null);
 
-	// 임시 데이터 - 실제로는 API나 웹소켓에서 받아올 예정
+	const scrollToBottom = () => {
+		messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+	};
+
 	useEffect(() => {
-		const dummyMessages: ChatMessage[] = [
-			{
-				id: '1',
-				message: '안녕하세요!',
-				isMe: false,
-				timestamp: '12:00',
-				date: '2024-01-17',
-				username: 'USER02',
-			},
-			{
-				id: '2',
-				message: '이건 상대방 채팅입니다.',
-				isMe: false,
-				timestamp: '12:00',
-				date: '2024-01-17',
-				username: 'USER02',
-			},
-			{
-				id: '3',
-				message: '네, 안녕하세요!',
-				isMe: true,
-				timestamp: '13:02',
-				date: '2025-01-22',
-				username: 'ME',
-			},
-		];
+		scrollToBottom();
+	}, [chatMessages]); // 메시지가 변경될 때마다 스크롤
 
-		setMessages(dummyMessages);
+	useEffect(() => {
+		// 현재 로그인한 사용자의 ID를 가져옴
+		const getCurrentUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			setCurrentUserId(user?.id || null);
+		};
+		getCurrentUser();
 	}, []);
+
+	// Supabase 메시지를 UI 메시지 형식으로 변환
+	const formattedMessages: ChatMessage[] = chatMessages.map(msg => ({
+		id: msg.id,
+		message: msg.content,
+		isMe: msg.user_id === currentUserId,
+		timestamp: format(new Date(msg.created_at), 'HH:mm'),
+		date: format(new Date(msg.created_at), 'yyyy-MM-dd'),
+		username: msg.user_id, // TODO: 사용자 목
+	}));
 
 	return (
 		<Container>
 			<ChattingHeader></ChattingHeader>
 			<ChattingContent>
-				{messages.map((message, index) => {
+				{formattedMessages.map((message, index) => {
 					// 이전 메시지가 있고, 같은 사용자의 메시지인 경우 유저네임을 숨김
 					const showUsername =
 						index === 0 ||
-						messages[index - 1].username !== message.username ||
-						messages[index - 1].isMe !== message.isMe;
+						formattedMessages[index - 1].username !== message.username ||
+						formattedMessages[index - 1].isMe !== message.isMe;
 
 					// 다음 메시지가 없거나, 현재 메시지와 다음 메시지의 타임스탬프가 다른 경우에만 타임스탬프 표시
-					const showTimestamp = index === messages.length - 1 || messages[index + 1].timestamp !== message.timestamp;
+					const showTimestamp =
+						index === formattedMessages.length - 1 || formattedMessages[index + 1].timestamp !== message.timestamp;
 
 					// 날짜가 바뀌는 경우 또는 첫 메시지인 경우 날짜 구분선 표시
-					const showDateDivider = index === 0 || message.date !== messages[index - 1]?.date;
+					const showDateDivider = index === 0 || message.date !== formattedMessages[index - 1]?.date;
 
 					return (
 						<React.Fragment key={message.id}>
@@ -71,6 +74,7 @@ export const ChattingPanel: React.FC = () => {
 						</React.Fragment>
 					);
 				})}
+				<div ref={messagesEndRef} /> {/* 스크롤 타겟 요소 */}
 			</ChattingContent>
 			<ChattingInput>
 				<SendChattingInput />

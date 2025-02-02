@@ -14,8 +14,10 @@ export const ChattingHeader = styled.div`
 
 export const ChattingContent = styled.div`
 	flex: 1;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	padding: 0 1rem;
+	padding-bottom: 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;

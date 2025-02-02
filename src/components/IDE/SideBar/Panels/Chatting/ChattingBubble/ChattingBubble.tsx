@@ -12,7 +12,7 @@ export const ChattingBubble: React.FC<ChattingBubbleProps> = ({
 }) => {
 	return (
 		<BubbleContainer isMe={isMe}>
-			{!isMe && showUsername && <Username>{username}</Username>}
+			{!isMe && showUsername && <Username>User</Username>}
 			<MessageRow isMe={isMe}>
 				<BubbleContent isMe={isMe}>
 					<MessageText>{message}</MessageText>
