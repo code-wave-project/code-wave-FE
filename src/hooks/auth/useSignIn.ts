@@ -1,27 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '@/lib/axios';
+import { ApiResponse } from '@/types/api';
 
 interface SignInCredentials {
 	email: string;
 	password: string;
 }
 
-interface ApiResponse<T> {
-	success: 'SUCCESS' | 'FAIL';
-	message: string;
-	data: T | null;
-	error?: {
-		errorCode: string;
-		message: string;
-		errors: string[];
-	};
-}
-
 interface SignInData {
 	accessToken: string;
 	tokenType: string;
-	role: 'USER'; // 가능한 role 값들을 명시
+	role: 'USER';
 }
 
 export const useSignIn = () => {
@@ -42,7 +32,9 @@ export const useSignIn = () => {
 					`${response.data.tokenType} ${response.data.accessToken}`;
 
 				// 로그인 성공 시 대쉬보드 페이지로 이동
-				navigate('/dashboard');
+				// navigate('/dashboard');
+				// 빠른 테스트를 위해 에디터 페이지로 이동
+				navigate('/editor');
 			}
 		},
 		onError: error => {
