@@ -8,6 +8,7 @@ import DeleteIcon from '@assets/icons/project_delete.svg';
 import ToastMessage from '@components/Common/ToastMessage';
 
 interface ProjectCardProps {
+	key: number;
 	title: string;
 	text: string;
 	user: string;
@@ -16,17 +17,20 @@ interface ProjectCardProps {
 	inviteCode: string;
 	onEdit?: () => void;
 	onDelete?: () => void;
+	onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDelete }: ProjectCardProps) {
+function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDelete, onClick }: ProjectCardProps) {
 	const [isHidden, setIsHidden] = useState(true);
 	const [isToastVisible, setIsToastVisible] = useState(false);
 
-	const toggleHidden = () => {
+	const toggleHidden = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setIsHidden(prev => !prev);
 	};
 
-	const handleCopy = () => {
+	const handleCopy = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		if (!isHidden) {
 			navigator.clipboard
 				.writeText(inviteCode)
@@ -42,9 +46,19 @@ function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDe
 		}
 	};
 
+	const handleEdit = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		onEdit?.();
+	};
+
+	const handleDelete = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		onDelete?.();
+	};
+
 	return (
 		<>
-			<S.ProjectCard>
+			<S.ProjectCard onClick={onClick}>
 				<S.Title>{title}</S.Title>
 				<S.Text>{text}</S.Text>
 				<S.Group>
@@ -74,8 +88,8 @@ function ProjectCard({ title, text, user, date, member, inviteCode, onEdit, onDe
 					</S.SubGroup>
 				</S.Group>
 				<S.SelectGroup>
-					<S.Icon src={EditIcon} alt="프로젝트 수정하기" onClick={() => onEdit?.()} />
-					<S.Icon src={DeleteIcon} alt="프로젝트 삭제하기" onClick={() => onDelete?.()} />
+					<S.Icon src={EditIcon} alt="프로젝트 수정하기" onClick={handleEdit} />
+					<S.Icon src={DeleteIcon} alt="프로젝트 삭제하기" onClick={handleDelete} />
 				</S.SelectGroup>
 			</S.ProjectCard>
 
