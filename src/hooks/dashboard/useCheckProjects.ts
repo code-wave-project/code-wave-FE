@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 
 interface Project {
+	projectId: number;
 	createdAt: string;
 	updatedAt: string;
 	status: string;
-	id: number;
 	title: string;
 	description: string;
 	inviteCode: string;
@@ -34,6 +34,9 @@ export const useCheckProjects = () => {
 		mutationFn: async () => {
 			const response = await axiosInstance.get<ProjectsResponse>('/project/all');
 			return response.data;
+		},
+		onSuccess: data => {
+			console.log('Projects fetched successfully:', data);
 		},
 		onError: error => {
 			console.error('Error fetching projects:', error);

@@ -94,7 +94,7 @@ function Dashboard() {
 						) : displayedProjects.length > 0 ? (
 							displayedProjects.map(project => (
 								<ProjectCard
-									key={project.id}
+									key={project.projectId}
 									title={project.title}
 									text={project.description}
 									user={project.initiator}
@@ -103,7 +103,7 @@ function Dashboard() {
 									inviteCode={project.inviteCode}
 									onEdit={() => openEditModal(project)}
 									onDelete={() => openDeleteModal(project)}
-									onClick={() => handleNavLinkClick(`/editor/${project.id}`)}
+									onClick={() => handleNavLinkClick(`/editor/${project.projectId}`)}
 								/>
 							))
 						) : (
