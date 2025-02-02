@@ -8,6 +8,7 @@ import logoGoogle from '../assets/icons/login_google.svg';
 import logoKakao from '../assets/icons/login_kakao.svg';
 import passwordShow from '../assets/icons/password_show.svg';
 import passwordHide from '../assets/icons/password_hide.svg';
+import { useSignIn } from '@/hooks/auth/useSignIn';
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -182,18 +183,21 @@ const Login = () => {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [userID, setUserID] = useState('');
 	const [password, setPassword] = useState('');
-	const [loginError, setLoginError] = useState(false);
+	const { signIn, isLoading, error: signInError } = useSignIn();
 	const navigate = useNavigate();
 
-	const handleLogin = () => {
-		const validUsername = 'user';
-		const validPassword = '1234';
-
-		if (userID === validUsername && password === validPassword) {
-			setLoginError(false);
-			navigate('/dashboard');
-		} else {
-			setLoginError(true);
+	// 테스트 계정
+	// 	"email": "ex@naver.com",
+	// 	"password": "123qwe!@#",
+	// 	"name": "ex11"
+	const handleLogin = async () => {
+		try {
+			await signIn({
+				email: userID,
+				password: password,
+			});
+		} catch (error) {
+			console.error('Login failed:', error);
 		}
 	};
 
@@ -211,9 +215,9 @@ const Login = () => {
 						value={userID}
 						onChange={e => setUserID(e.target.value)}
 						onKeyDown={e => e.key === 'Enter' && handleLogin()}
-						loginError={loginError || false}
+						loginError={Boolean(signInError)}
 					/>
-					{loginError && <ErrorMessage>계정 또는 비밀번호를 다시 확인해주세요.</ErrorMessage>}
+					{signInError && <ErrorMessage>계정 또는 비밀번호를 다시 확인해주세요.</ErrorMessage>}
 				</InputContainer>
 				<InputContainer>
 					<Input
@@ -222,7 +226,7 @@ const Login = () => {
 						value={password}
 						onChange={e => setPassword(e.target.value)}
 						onKeyDown={e => e.key === 'Enter' && handleLogin()}
-						loginError={false}
+						loginError={Boolean(signInError)}
 					/>
 					<PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
 						<img src={passwordVisible ? passwordShow : passwordHide} />
@@ -239,7 +243,9 @@ const Login = () => {
 					</CheckboxLabel>
 					<FindAccount onClick={() => navigate('/find')}>아이디/비밀번호</FindAccount>
 				</LoginOptions>
-				<LoginButton onClick={handleLogin}>로그인</LoginButton>
+				<LoginButton onClick={handleLogin} disabled={isLoading}>
+					{isLoading ? '로그인 중...' : '로그인'}
+				</LoginButton>
 				<SNSTitle>SNS로 간편하게 로그인</SNSTitle>
 				<SNSContainer>
 					<SNSButton>
