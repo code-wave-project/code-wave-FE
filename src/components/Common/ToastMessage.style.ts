@@ -21,6 +21,7 @@ export const ToastContainer = styled.div`
 	padding: 16px 12px;
 	background-color: ${theme.COLOR.WHITE};
 	border-radius: 20px;
+	box-shadow: 0 4px 13px 0 ${theme.COLOR.FILTER};
 
 	color: ${theme.COLOR.GRAY600};
 	font-size: 12px;

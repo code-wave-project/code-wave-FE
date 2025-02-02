@@ -5,12 +5,15 @@ import InputText from '@components/Common/InputText';
 import ActiveButton from '@components/Common/ActiveButton';
 import Button from '@components/Common/Button';
 
+import { useDeleteProject } from '@/hooks/dashboard/useDeleteProject';
+
 interface DeleteModProps {
 	onClose?: React.MouseEventHandler<HTMLDivElement>;
 	project: {
+		id: number;
 		title: string;
-		user: string;
-		date: string;
+		initiator: string;
+		createdAt: string;
 		member?: string;
 	};
 }
@@ -19,6 +22,8 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 	const [projectName, setProjectName] = useState('');
 	const [isProjectNameValid, setIsProjectNameValid] = useState(false);
 	const [warningMessage, setWarningMessage] = useState('프로젝트 삭제를 원하시면 해당 프로젝트의 이름을 입력하세요.');
+
+	const { deleteProject, isLoading } = useDeleteProject();
 
 	const handleInputChange = (value: string) => {
 		const trimmedValue = value.trim();
@@ -38,7 +43,7 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 
 	console.log(projectName);
 
-	const isFormValid = isProjectNameValid;
+	// const isFormValid = isProjectNameValid;
 
 	const handleSubmit = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (!isProjectNameValid) {
@@ -46,10 +51,11 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 			return;
 		}
 
-		console.log('프로젝트 삭제 버튼 클릭됨');
-		if (onClose) {
-			onClose(event);
-		}
+		deleteProject(project.id, {
+			onSuccess: () => {
+				if (onClose) onClose(event);
+			},
+		});
 	};
 
 	return (
@@ -66,7 +72,7 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 							</S.DescriptionGroup>
 							<S.DescriptionGroup>
 								<S.Label>생성자</S.Label>
-								<S.Text>{project.user}</S.Text>
+								<S.Text>{project.initiator}</S.Text>
 							</S.DescriptionGroup>
 							<S.DescriptionGroup>
 								<S.Label>팀원</S.Label>
@@ -74,7 +80,7 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 							</S.DescriptionGroup>
 							<S.DescriptionGroup>
 								<S.Label>생성일자</S.Label>
-								<S.Text>{project.date}</S.Text>
+								<S.Text>{new Date(project.createdAt).toLocaleDateString()}</S.Text>
 							</S.DescriptionGroup>
 						</S.TextGroup>
 						<S.TextGroup>
@@ -87,7 +93,12 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 							/>
 						</S.TextGroup>
 						<S.ButtonGroup>
-							<ActiveButton onClick={handleSubmit} text="삭제" isActive={isFormValid} isLarge={false} />
+							<ActiveButton
+								onClick={handleSubmit}
+								text={isLoading ? '삭제 중...' : '삭제'}
+								isActive={isProjectNameValid && !isLoading}
+								isLarge={false}
+							/>
 							<Button onClick={onClose} text="취소" isLarge={false} />
 						</S.ButtonGroup>
 					</S.ModalContent>

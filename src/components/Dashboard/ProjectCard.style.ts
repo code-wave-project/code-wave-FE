@@ -55,6 +55,7 @@ export const GroupText = styled.div`
 	font-weight: 400;
 
 	width: max-content;
+	max-width: 90px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
