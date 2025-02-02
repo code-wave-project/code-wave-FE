@@ -39,6 +39,9 @@ export const useCheckProjects = () => {
 			const response = await axiosInstance.get<ProjectsResponse>('/project/all');
 			return response.data;
 		},
+		onSuccess: data => {
+			console.log('Projects fetched successfully:', data);
+		},
 		onError: error => {
 			console.error('Error fetching projects:', error);
 		},

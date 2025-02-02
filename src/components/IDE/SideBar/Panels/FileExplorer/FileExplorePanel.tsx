@@ -1,45 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NodeModel, Tree } from '@minoru/react-dnd-treeview';
 import { CustomData } from './FileExplorePanel.d';
 import { Container } from './FileExplorePanel.style';
 import { CustomNode } from './CustomNode/CustomNode';
+import { useTabStore } from '@/store/useTabStore';
+import { useFileStore } from '@/store/useFileStore';
 
 export const FileExplorePanel: React.FC = () => {
-	const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>([
-		{
-			id: '1',
-			parent: '0',
-			droppable: true,
-			text: 'src',
-			data: {
-				fileType: 'folder',
-				path: '/src',
-			},
-		},
-		{
-			id: '2',
-			parent: '1',
-			droppable: false,
-			text: 'App.tsx',
-			data: {
-				fileType: 'file',
-				path: '/src/App.tsx',
-			},
-		},
-		{
-			id: '3',
-			parent: '1',
-			droppable: true,
-			text: 'components',
-			data: {
-				fileType: 'folder',
-				path: '/src/components',
-			},
-		},
-	]);
+	const { addTab } = useTabStore();
+	const { files, addFile, addFolder, updateFiles } = useFileStore();
 
 	const handleDrop = (newTree: NodeModel<CustomData>[]) => {
-		setTreeData(newTree);
+		updateFiles(newTree);
 	};
 
 	const canDrag = (node: NodeModel<CustomData> | undefined) => {
@@ -48,17 +20,33 @@ export const FileExplorePanel: React.FC = () => {
 	};
 
 	const handleAddFile = (parentId: string) => {
-		console.log('Add file to:', parentId);
+		const fileName = prompt('Enter file name:');
+		if (fileName) {
+			addFile(parentId, fileName);
+		}
 	};
 
 	const handleAddFolder = (parentId: string) => {
-		console.log('Add folder to:', parentId);
+		const folderName = prompt('Enter folder name:');
+		if (folderName) {
+			addFolder(parentId, folderName);
+		}
+	};
+
+	const handleNodeClick = (node: NodeModel<CustomData>) => {
+		if (!node.droppable) {
+			addTab({
+				title: node.text,
+				path: node.data?.path || '',
+				content: node.data?.content || '',
+			});
+		}
 	};
 
 	return (
 		<Container>
 			<Tree
-				tree={treeData}
+				tree={files}
 				rootId="0"
 				render={(node, { depth, isOpen, onToggle }) => (
 					<CustomNode
@@ -68,6 +56,7 @@ export const FileExplorePanel: React.FC = () => {
 						onToggle={onToggle}
 						onAddFile={handleAddFile}
 						onAddFolder={handleAddFolder}
+						onNodeClick={handleNodeClick}
 					/>
 				)}
 				dragPreviewRender={monitorProps => <div>{monitorProps.item.text}</div>}
