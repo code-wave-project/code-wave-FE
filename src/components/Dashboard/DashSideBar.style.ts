@@ -14,6 +14,7 @@ export const DashSideBar = styled.div`
 
 export const Logo = styled.img`
 	width: 200px;
+	cursor: pointer;
 `;
 
 export const TopSpace = styled.div`
