@@ -121,8 +121,9 @@ const FindAccount = () => {
 	const [findIDSuccess, setFindIDSuccess] = useState(false);
 	const [findPWSuccess, setFindPWSuccess] = useState(false);
 
-	const isFindIDValid = idInfo.name && idInfo.email;
-	const isFindPWValid = pwInfo.id && pwInfo.email;
+	const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+	const isFindIDValid = idInfo.name && idInfo.email && emailRegex.test(idInfo.email);
+	const isFindPWValid = pwInfo.id && pwInfo.email && emailRegex.test(pwInfo.email);
 	const [isButtonClick, setButtonClick] = useState(false);
 
 	const handleButtonClick = () => {
