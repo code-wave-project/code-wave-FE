@@ -8,6 +8,7 @@ import ProjectCard from '@components/Dashboard/ProjectCard';
 import CreateModModal from '@components/DashboardModal/CreateModModal';
 import DeleteModModal from '@components/DashboardModal/DeleteModModal';
 import InviteModal from '@components/DashboardModal/InviteModal';
+import LoadingModal from '@components/Common/LoadingModal';
 
 import { useCheckProjects } from '@/hooks/dashboard/useCheckProjects';
 
@@ -94,7 +95,9 @@ function Dashboard() {
 					</S.TopSpace>
 					<S.ProjectSpace>
 						{isLoading ? (
-							<S.NonProject>로딩 중...</S.NonProject>
+							<S.NonProject>
+								<LoadingModal text="로딩 중" />
+							</S.NonProject>
 						) : isError ? (
 							<S.NonProject>프로젝트를 불러오는 중 오류가 발생했습니다.</S.NonProject>
 						) : displayedProjects.length > 0 ? (
