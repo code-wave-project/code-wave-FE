@@ -11,7 +11,7 @@ interface CreateModProps {
 	onClose?: React.MouseEventHandler<HTMLDivElement>;
 	isCreate: boolean;
 	initialData?: {
-		id?: number;
+		projectId?: number;
 		title?: string;
 		description: string;
 	} | null;
@@ -43,7 +43,7 @@ const CreateModModal = ({ onClose, isCreate, initialData }: CreateModProps) => {
 	const handleSubmit = (event: React.MouseEvent<HTMLDivElement>) => {
 		upsertProject(
 			{
-				projectId: initialData?.id, // 수정 시 ID 포함, 생성 시 생략
+				projectId: initialData?.projectId, // 수정 시 ID 포함, 생성 시 생략
 				projectName,
 				projectDescription,
 			},

@@ -4,12 +4,16 @@ import { axiosInstance } from '@/lib/axios';
 interface Project {
 	createdAt: string;
 	updatedAt: string;
-	status: string;
-	id: number;
+	projectId: number;
 	title: string;
 	description: string;
 	inviteCode: string;
 	initiator: string;
+	users: {
+		id: number;
+		email: string;
+		username: string;
+	}[];
 }
 
 interface ProjectsResponse {

@@ -10,7 +10,7 @@ import { useDeleteProject } from '@/hooks/dashboard/useDeleteProject';
 interface DeleteModProps {
 	onClose?: React.MouseEventHandler<HTMLDivElement>;
 	project: {
-		id: number;
+		projectId: number;
 		title: string;
 		initiator: string;
 		createdAt: string;
@@ -51,7 +51,7 @@ const DeleteModModal = ({ onClose, project }: DeleteModProps) => {
 			return;
 		}
 
-		deleteProject(project.id, {
+		deleteProject(project.projectId, {
 			onSuccess: () => {
 				if (onClose) onClose(event);
 			},
