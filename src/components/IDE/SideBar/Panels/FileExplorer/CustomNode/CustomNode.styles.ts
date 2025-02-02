@@ -63,5 +63,9 @@ export const ActionButton = styled.button`
 	svg {
 		width: 1.5rem;
 		height: 1.5rem;
+
+		path {
+			fill: ${({ theme }) => theme.COLOR.GRAY500};
+		}
 	}
 `;

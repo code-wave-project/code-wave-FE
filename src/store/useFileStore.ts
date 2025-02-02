@@ -107,9 +107,18 @@ export const useFileStore = create<FileState>((set, get) => ({
 	},
 
 	deleteFile: (id: string) => {
-		set(state => ({
-			files: state.files.filter(file => file.id !== id && file.parent !== id),
-		}));
+		set(state => {
+			// 삭제할 파일/폴더의 경로를 찾습니다
+			const targetNode = state.files.find(file => file.id === id);
+			if (!targetNode) return state;
+
+			const targetPath = targetNode.data?.path || '';
+
+			// 해당 경로로 시작하는 모든 파일/폴더를 필터링하여 제거합니다
+			const newFiles = state.files.filter(file => !file.data?.path?.startsWith(targetPath));
+
+			return { files: newFiles };
+		});
 	},
 
 	updateFileContent: (path: string, content: string) => {
