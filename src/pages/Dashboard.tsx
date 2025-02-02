@@ -99,7 +99,7 @@ function Dashboard() {
 									text={project.description}
 									user={project.initiator}
 									date={new Date(project.createdAt).toLocaleDateString()}
-									member="USER, USER" // 멤버 데이터가 필요하면 API 수정 필요
+									member={project.users.map(user => user.username).join(', ')}
 									inviteCode={project.inviteCode}
 									onEdit={() => openEditModal(project)}
 									onDelete={() => openDeleteModal(project)}

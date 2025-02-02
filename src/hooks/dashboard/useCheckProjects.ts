@@ -2,14 +2,18 @@ import { useMutation } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 
 interface Project {
-	projectId: number;
 	createdAt: string;
 	updatedAt: string;
-	status: string;
+	projectId: number;
 	title: string;
 	description: string;
 	inviteCode: string;
 	initiator: string;
+	users: {
+		id: number;
+		email: string;
+		username: string;
+	}[];
 }
 
 interface ProjectsResponse {
