@@ -2,7 +2,7 @@
 	"rewrites": [
 		{
 			"source": "/(.*)",
-			"destination": "/index.html"
+			"destination": "${VITE_API_URL}/$1"
 		}
 	]
 }
