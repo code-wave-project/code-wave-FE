@@ -134,6 +134,7 @@ const ResetPassword = () => {
 							value={password}
 							error={!isValiad && isButtonClick}
 							onChange={e => setPassword(e.target.value)}
+							onKeyDown={e => e.key === 'Enter' && handleSubmit()}
 						/>
 						<PasswordShowButton onClick={() => setPasswordVisible(!passwordVisible)}>
 							<img src={passwordVisible ? passwordShow : passwordHide} />
@@ -146,6 +147,7 @@ const ResetPassword = () => {
 							value={confirmPassword}
 							error={!isValiad && isButtonClick}
 							onChange={handleConfirmPasswordChange}
+							onKeyDown={e => e.key === 'Enter' && handleSubmit()}
 						/>
 						<PasswordShowButton onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
 							<img src={confirmPasswordVisible ? passwordShow : passwordHide} alt="비밀번호 보기" />
