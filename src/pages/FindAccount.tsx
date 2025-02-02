@@ -213,7 +213,7 @@ const FindAccount = () => {
 								/>
 
 								{isButtonClick && !idInfo.email && (
-									<ErrorMessage>아이디 찾기를 위하여 가입 시 사용한 이름을 입력하세요.</ErrorMessage>
+									<ErrorMessage>아이디 찾기를 위하여 가입 시 사용한 이메일을 입력하세요.</ErrorMessage>
 								)}
 
 								{isButtonClick && idInfo.email && !isFindIDValid && (
