@@ -32,9 +32,8 @@ export const useSignIn = () => {
 					`${response.data.tokenType} ${response.data.accessToken}`;
 
 				// 로그인 성공 시 대쉬보드 페이지로 이동
-				// navigate('/dashboard');
+				navigate('/dashboard');
 				// 빠른 테스트를 위해 에디터 페이지로 이동
-				navigate('/editor');
 			}
 		},
 		onError: error => {
