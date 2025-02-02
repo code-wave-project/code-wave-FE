@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -6,9 +6,11 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import { Container, EditorContainer, EmptyContainer, EmptyText } from './Editor.styles';
-import { EditorProps, TabType } from './Editor.d';
+import { EditorProps } from './Editor.d';
 import { TabBar } from './TabBar/TabBar';
 import { AppBar } from './AppBar/AppBar';
+import { useTabStore } from '@/store/useTabStore';
+import { useFileStore } from '@/store/useFileStore';
 // import Footer from './Footer/Footer';
 
 // Monaco Editor 웹 워커 설정
@@ -31,8 +33,8 @@ self.MonacoEnvironment = {
 };
 
 export const Editor: React.FC<EditorProps> = ({ onSave }) => {
-	const [tabs, setTabs] = useState<TabType[]>([]);
-	const [activeTabId, setActiveTabId] = useState<string | null>(null);
+	const { tabs, activeTabId, setActiveTab, removeTab } = useTabStore();
+	const { updateFileContent } = useFileStore();
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 	const monacoEl = useRef<HTMLDivElement>(null);
 
@@ -96,14 +98,6 @@ export const Editor: React.FC<EditorProps> = ({ onSave }) => {
 		};
 	}, [activeTabId, tabs]);
 
-	const closeTab = (tabId: string, event: React.MouseEvent) => {
-		event.stopPropagation();
-		setTabs(prev => prev.filter(tab => tab.id !== tabId));
-		if (activeTabId === tabId) {
-			setActiveTabId(null);
-		}
-	};
-
 	const getLanguageFromExtension = (extension: string): string => {
 		const languageMap: { [key: string]: string } = {
 			js: 'javascript',
@@ -119,18 +113,50 @@ export const Editor: React.FC<EditorProps> = ({ onSave }) => {
 		return languageMap[extension] || 'plaintext';
 	};
 
+	// 저장 핸들러 추가
+	const handleSave = () => {
+		if (!editorRef.current || !activeTabId) return;
+
+		const activeTab = tabs.find(tab => tab.id === activeTabId);
+		if (!activeTab) return;
+
+		const content = editorRef.current.getValue();
+		updateFileContent(activeTab.path, content);
+	};
+
+	// 키보드 단축키 이벤트 리스너 추가
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+				e.preventDefault();
+				handleSave();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [activeTabId, tabs]);
+
+	// 에디터 설정에 저장 명령 추가
+	useEffect(() => {
+		if (!editorRef.current) return;
+
+		editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+			handleSave();
+		});
+	}, [activeTabId, tabs]);
+
 	return (
 		<Container>
 			<AppBar />
-			<TabBar tabs={tabs} activeTabId={activeTabId} onTabClick={setActiveTabId} onTabClose={closeTab} />
-			{activeTabId ? (
-				<EditorContainer ref={monacoEl} />
-			) : (
+			<TabBar tabs={tabs} activeTabId={activeTabId} onTabClick={setActiveTab} removeTab={removeTab} />
+			{activeTabId === null ? (
 				<EmptyContainer>
 					<EmptyText>선택된 파일이 없습니다</EmptyText>
 				</EmptyContainer>
+			) : (
+				<EditorContainer ref={monacoEl} />
 			)}
-			{/* <Footer /> */}
 		</Container>
 	);
 };

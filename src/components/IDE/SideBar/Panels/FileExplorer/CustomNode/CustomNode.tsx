@@ -13,16 +13,29 @@ interface CustomNodeProps {
 	onToggle: (id: string) => void;
 	onAddFile?: (parentId: string) => void;
 	onAddFolder?: (parentId: string) => void;
+	onNodeClick?: (node: NodeModel<CustomData>) => void;
 }
 
-export const CustomNode: React.FC<CustomNodeProps> = ({ node, depth, isOpen, onToggle, onAddFile, onAddFolder }) => {
+export const CustomNode: React.FC<CustomNodeProps> = ({
+	node,
+	depth,
+	isOpen,
+	onToggle,
+	onAddFile,
+	onAddFolder,
+	onNodeClick,
+}) => {
 	const indent = depth * 24;
 	const isRoot = node.parent === '0';
 
 	const handleClick = (e: React.MouseEvent) => {
 		if (node.droppable) {
+			// 폴더를 클릭했을 때 토글
 			e.stopPropagation();
 			onToggle(node.id as string);
+		} else {
+			// 파일을 클릭했을 때 탭 추가
+			onNodeClick?.(node);
 		}
 	};
 
